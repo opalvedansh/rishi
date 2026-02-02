@@ -62,6 +62,8 @@ export interface CreateOrderData {
     amount: number;
     shipping_address: Order['shipping_address'];
     items: Order['items'];
+    coupon_code?: string;
+    discount_amount?: number;
 }
 
 // Customer care details

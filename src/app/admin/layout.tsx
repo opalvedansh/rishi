@@ -18,7 +18,8 @@ import {
     Search,
     Bell,
     MessageSquare,
-    Users
+    Users,
+    Tag
 } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -54,6 +55,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
         { name: 'Products', href: '/admin/products', icon: Package },
         { name: 'Orders', href: '/admin/orders', icon: ShoppingBag },
+        { name: 'Coupons', href: '/admin/coupons', icon: Tag },
         { name: 'Reviews', href: '/admin/reviews', icon: MessageSquare },
         { name: 'Customers', href: '/admin/customers', icon: Users },
         { name: 'Content (CMS)', href: '/admin/content', icon: FileText },

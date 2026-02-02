@@ -7,10 +7,12 @@ import Container from "@/components/ui/Container";
 import FadeIn from "@/components/animations/FadeIn";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Lock, Loader2, CreditCard } from "lucide-react";
+import { ArrowLeft, Lock, Loader2, CreditCard, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRazorpay } from "@/hooks/useRazorpay";
 import { createOrder, updateOrderPayment } from "@/lib/supabase/orders";
+import { validateCoupon, incrementCouponUsage, Coupon } from "@/lib/supabase/coupons";
+import { Tag, X } from "lucide-react";
 
 export default function CheckoutPage() {
     const { cart, cartCount, clearCart } = useShop();
@@ -39,12 +41,50 @@ export default function CheckoutPage() {
         phone: ""
     });
 
+    const [couponCode, setCouponCode] = useState("");
+    const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
+    const [couponError, setCouponError] = useState("");
+    const [discountAmount, setDiscountAmount] = useState(0);
+    const [isVerifyingCoupon, setIsVerifyingCoupon] = useState(false);
+
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const shipping: number = 0;
-    const total = subtotal + shipping;
+    const total = subtotal + shipping - discountAmount;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleApplyCoupon = async () => {
+        if (!couponCode.trim()) return;
+
+        setIsVerifyingCoupon(true);
+        setCouponError("");
+
+        try {
+            const result = await validateCoupon(couponCode, subtotal);
+
+            if (result.valid && result.coupon) {
+                setAppliedCoupon(result.coupon);
+                setDiscountAmount(result.discountAmount || 0);
+                setCouponError("");
+            } else {
+                setCouponError(result.message || "Invalid coupon");
+                setAppliedCoupon(null);
+                setDiscountAmount(0);
+            }
+        } catch (error) {
+            setCouponError("Failed to apply coupon");
+        } finally {
+            setIsVerifyingCoupon(false);
+        }
+    };
+
+    const removeCoupon = () => {
+        setAppliedCoupon(null);
+        setDiscountAmount(0);
+        setCouponCode("");
+        setCouponError("");
     };
 
     const handleRazorpayPayment = async (e: React.FormEvent) => {
@@ -75,6 +115,8 @@ export default function CheckoutPage() {
                     state: formData.state,
                     zip: formData.zip,
                 },
+                coupon_code: appliedCoupon?.code,
+                discount_amount: discountAmount,
                 items: cart.map(item => ({
                     id: item.id,
                     title: item.title,
@@ -110,6 +152,10 @@ export default function CheckoutPage() {
                         response.razorpay_payment_id,
                         'paid'
                     );
+
+                    if (appliedCoupon) {
+                        await incrementCouponUsage(appliedCoupon.code);
+                    }
 
                     // Clear cart and redirect
                     clearCart();
@@ -356,6 +402,53 @@ export default function CheckoutPage() {
                             </div>
 
                             <div className="border-t border-neutral-100 pt-6 space-y-3">
+                                {/* Coupon Input */}
+                                <div className="mb-4">
+                                    {!appliedCoupon ? (
+                                        <div className="space-y-2">
+                                            <div className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Coupon Code"
+                                                    value={couponCode}
+                                                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                                    className="flex-1 border border-neutral-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-black uppercase font-medium placeholder:normal-case"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={handleApplyCoupon}
+                                                    disabled={isVerifyingCoupon || !couponCode}
+                                                    className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-neutral-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                >
+                                                    {isVerifyingCoupon ? <Loader2 className="w-4 h-4 animate-spin" /> : "Apply"}
+                                                </button>
+                                            </div>
+                                            {couponError && (
+                                                <p className="text-xs text-red-500 flex items-center gap-1">
+                                                    <AlertCircle className="w-3 h-3" />
+                                                    {couponError}
+                                                </p>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div className="bg-green-50 border border-green-200 rounded-lg p-3 flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <Tag className="w-4 h-4 text-green-600" />
+                                                <div>
+                                                    <p className="text-sm font-bold text-green-700">{appliedCoupon.code}</p>
+                                                    <p className="text-xs text-green-600">{appliedCoupon.discount_percent}% Discount Applied</p>
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={removeCoupon}
+                                                className="test-neutral-400 hover:text-red-500 transition-colors p-1"
+                                            >
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+
                                 <div className="flex justify-between text-sm text-neutral-600">
                                     <span>Subtotal</span>
                                     <span>₹{subtotal.toLocaleString()}</span>
@@ -368,6 +461,12 @@ export default function CheckoutPage() {
                                         <span>₹{shipping.toLocaleString()}</span>
                                     )}
                                 </div>
+                                {discountAmount > 0 && (
+                                    <div className="flex justify-between text-sm text-green-600 font-medium">
+                                        <span>Discount</span>
+                                        <span>-₹{discountAmount.toLocaleString()}</span>
+                                    </div>
+                                )}
                                 <div className="border-t border-neutral-100 pt-4 flex justify-between items-end">
                                     <span className="font-medium text-lg">Total</span>
                                     <div className="text-right">
