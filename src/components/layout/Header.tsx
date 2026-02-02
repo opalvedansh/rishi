@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { Search, ShoppingBag, User, Heart, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -34,8 +35,14 @@ const Header = () => {
 
                     {/* Logo (Center) */}
                     <div className="w-1/3 flex justify-center">
-                        <Link href="/" className="font-display text-3xl font-bold tracking-tight">
-                            Doree
+                        <Link href="/" className="relative h-12 w-auto aspect-[3/1]">
+                            <Image
+                                src="/doree-logo.png"
+                                alt="Doree"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
                         </Link>
                     </div>
 
@@ -119,7 +126,15 @@ const Header = () => {
                                 className="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-white z-[70] lg:hidden flex flex-col p-8"
                             >
                                 <div className="flex justify-between items-center mb-12">
-                                    <span className="font-display text-2xl font-bold">Doree</span>
+                                    <div className="relative h-8 w-auto aspect-[3/1]">
+                                        <Image
+                                            src="/doree-logo.png"
+                                            alt="Doree"
+                                            fill
+                                            className="object-contain"
+                                            priority
+                                        />
+                                    </div>
                                     <button onClick={() => setIsMenuOpen(false)} className="p-2 -mr-2">
                                         <X className="w-6 h-6" />
                                     </button>
