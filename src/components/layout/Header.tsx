@@ -35,7 +35,7 @@ const Header = () => {
 
                     {/* Logo (Center) */}
                     <div className="w-1/3 flex justify-center">
-                        <Link href="/" className="relative h-12 w-auto aspect-[3/1]">
+                        <Link href="/" className="relative h-20 w-auto aspect-[3/1]">
                             <Image
                                 src="/doree-logo.png"
                                 alt="Doree"
@@ -126,7 +126,7 @@ const Header = () => {
                                 className="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-white z-[70] lg:hidden flex flex-col p-8"
                             >
                                 <div className="flex justify-between items-center mb-12">
-                                    <div className="relative h-8 w-auto aspect-[3/1]">
+                                    <div className="relative h-12 w-auto aspect-[3/1]">
                                         <Image
                                             src="/doree-logo.png"
                                             alt="Doree"
