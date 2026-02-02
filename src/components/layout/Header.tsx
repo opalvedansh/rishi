@@ -123,7 +123,7 @@ const Header = () => {
                                 animate={{ x: 0 }}
                                 exit={{ x: "-100%" }}
                                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                                className="fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-white z-[70] lg:hidden flex flex-col p-8"
+                                className="fixed top-0 left-0 bottom-0 w-[85%] max-w-sm bg-white/90 backdrop-blur-xl z-[70] lg:hidden flex flex-col p-8 shadow-2xl"
                             >
                                 <div className="flex justify-between items-center mb-12">
                                     <div className="relative h-12 w-auto aspect-[3/1]">
@@ -135,39 +135,51 @@ const Header = () => {
                                             priority
                                         />
                                     </div>
-                                    <button onClick={() => setIsMenuOpen(false)} className="p-2 -mr-2">
+                                    <button onClick={() => setIsMenuOpen(false)} className="p-2 -mr-2 text-black/50 hover:text-black transition-colors rounded-full hover:bg-black/5">
                                         <X className="w-6 h-6" />
                                     </button>
                                 </div>
 
                                 <nav className="flex flex-col gap-6">
-                                    <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-xl font-medium hover:text-neutral-500 transition-colors">
-                                        Home
-                                    </Link>
-                                    <Link href="/products" onClick={() => setIsMenuOpen(false)} className="text-xl font-medium hover:text-neutral-500 transition-colors">
-                                        Shop
-                                    </Link>
-                                    <Link href="/about" onClick={() => setIsMenuOpen(false)} className="text-xl font-medium hover:text-neutral-500 transition-colors">
-                                        About
-                                    </Link>
-                                    <Link href="/blog" onClick={() => setIsMenuOpen(false)} className="text-xl font-medium hover:text-neutral-500 transition-colors">
-                                        Journal
-                                    </Link>
-                                    <Link href="/contact" onClick={() => setIsMenuOpen(false)} className="text-xl font-medium hover:text-neutral-500 transition-colors">
-                                        Contact
-                                    </Link>
+                                    {[
+                                        { href: "/", label: "Home" },
+                                        { href: "/products", label: "Shop" },
+                                        { href: "/about", label: "About" },
+                                        { href: "/blog", label: "Journal" },
+                                        { href: "/contact", label: "Contact" },
+                                    ].map((item, i) => (
+                                        <motion.div
+                                            key={item.href}
+                                            initial={{ opacity: 0, x: -20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.1 + i * 0.1 }}
+                                        >
+                                            <Link
+                                                href={item.href}
+                                                onClick={() => setIsMenuOpen(false)}
+                                                className="text-3xl font-display font-medium hover:text-neutral-500 transition-colors block"
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        </motion.div>
+                                    ))}
                                 </nav>
 
-                                <div className="mt-auto pt-8 border-t border-neutral-100 flex flex-col gap-4">
-                                    <Link href={user ? "/account" : "/login"} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-neutral-600">
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.6 }}
+                                    className="mt-auto pt-8 border-t border-neutral-200/50 flex flex-col gap-4"
+                                >
+                                    <Link href={user ? "/account" : "/login"} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-lg font-medium text-neutral-800">
                                         <User className="w-5 h-5" />
                                         <span>{user ? "My Account" : "Sign In"}</span>
                                     </Link>
-                                    <Link href="/wishlist" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-neutral-600">
+                                    <Link href="/wishlist" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-lg font-medium text-neutral-800">
                                         <Heart className="w-5 h-5" />
                                         <span>Wishlist ({wishlist.length})</span>
                                     </Link>
-                                </div>
+                                </motion.div>
                             </motion.div>
                         </>
                     )}

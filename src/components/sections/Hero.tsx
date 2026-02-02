@@ -32,16 +32,19 @@ const Hero = ({
     const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
     return (
-        <section ref={ref} className="relative h-screen min-h-[700px] w-full overflow-hidden bg-black text-white flex items-center justify-center">
+        <section ref={ref} className="relative h-[100dvh] w-full overflow-hidden bg-black text-white flex items-center justify-center">
             {/* Background Video with Parallax */}
             <motion.div
                 style={{ y, opacity }}
                 className="absolute inset-0 z-0 pointer-events-none"
             >
                 <div className="absolute inset-0 bg-black/30 z-10" />
+                {/* Gradient Overlay for Text Contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 z-10" />
+
                 <iframe
                     src={videoUrl}
-                    className="w-full h-full object-cover scale-150 pointer-events-none"
+                    className="w-full h-full object-cover scale-[1.7] md:scale-150 pointer-events-none"
                     allow="autoplay; encrypted-media; loop"
                     allowFullScreen
                     title="Hero Video"
@@ -65,7 +68,7 @@ const Hero = ({
                         initial={{ y: "100%" }}
                         animate={{ y: 0 }}
                         transition={{ duration: 1, delay: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-                        className="font-display text-5xl md:text-7xl lg:text-9xl leading-tight tracking-tight mix-blend-overlay text-white/90"
+                        className="font-display text-6xl md:text-7xl lg:text-9xl leading-[0.9] tracking-tight text-white mix-blend-normal drop-shadow-2xl"
                     >
                         {title}
                     </motion.h1>
