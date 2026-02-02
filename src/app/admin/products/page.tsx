@@ -10,15 +10,20 @@ import {
     Edit,
     Trash2,
     Eye,
-    Loader2
+    Loader2,
+    GripVertical,
+    Save
 } from "lucide-react";
-import { getProducts, deleteProduct, Product } from "@/lib/supabase/products";
+import { Reorder } from "framer-motion";
+import { getProducts, deleteProduct, updateProductOrder, Product } from "@/lib/supabase/products";
 
 export default function AdminProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState("");
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [isSavingOrder, setIsSavingOrder] = useState(false);
+    const [hasOrderChanged, setHasOrderChanged] = useState(false);
 
     // Fetch products from database
     useEffect(() => {
@@ -36,6 +41,29 @@ export default function AdminProductsPage() {
             setIsLoading(false);
         }
     }
+
+    async function handleSaveOrder() {
+        setIsSavingOrder(true);
+        try {
+            const orderUpdates = products.map((p, index) => ({
+                id: p.id,
+                sort_order: index + 1
+            }));
+            await updateProductOrder(orderUpdates);
+            setHasOrderChanged(false);
+            // Optional: Show success toast
+        } catch (error) {
+            console.error("Failed to save order:", error);
+            alert("Failed to save order");
+        } finally {
+            setIsSavingOrder(false);
+        }
+    }
+
+    const handleReorder = (newOrder: Product[]) => {
+        setProducts(newOrder);
+        setHasOrderChanged(true);
+    };
 
     async function handleDelete(id: string) {
         if (!confirm("Are you sure you want to delete this product?")) return;
@@ -72,13 +100,25 @@ export default function AdminProductsPage() {
                     <h1 className="font-display text-3xl font-bold text-neutral-900">Products</h1>
                     <p className="text-neutral-500 mt-1">Manage your product catalog and inventory.</p>
                 </div>
-                <Link
-                    href="/admin/products/new"
-                    className="bg-black text-white px-4 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-neutral-800 transition-colors flex items-center gap-2"
-                >
-                    <Plus className="w-4 h-4" />
-                    Add Product
-                </Link>
+                <div className="flex gap-2">
+                    {hasOrderChanged && (
+                        <button
+                            onClick={handleSaveOrder}
+                            disabled={isSavingOrder}
+                            className="bg-black text-white px-4 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-neutral-800 transition-colors flex items-center gap-2 disabled:opacity-50"
+                        >
+                            {isSavingOrder ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                            Save Order
+                        </button>
+                    )}
+                    <Link
+                        href="/admin/products/new"
+                        className="bg-black text-white px-4 py-2.5 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-neutral-800 transition-colors flex items-center gap-2"
+                    >
+                        <Plus className="w-4 h-4" />
+                        Add Product
+                    </Link>
+                </div>
             </div>
 
             {/* Filters & Search */}
@@ -131,11 +171,23 @@ export default function AdminProductsPage() {
                                         <th className="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-neutral-500">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-neutral-100">
+                                <Reorder.Group as="tbody" axis="y" values={products} onReorder={handleReorder} className="divide-y divide-neutral-100">
                                     {filteredProducts.map((product) => (
-                                        <tr key={product.id} className="hover:bg-neutral-50/50 transition-colors group">
+                                        <Reorder.Item
+                                            key={product.id}
+                                            value={product}
+                                            as="tr"
+                                            className="hover:bg-neutral-50/50 transition-colors group bg-white"
+                                            dragListener={false}
+                                            dragControls={undefined}
+                                        >
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-4">
+                                                    {/* Drag Handle */}
+                                                    <Reorder.Item value={product} as="div" dragListener={true} className="cursor-grab active:cursor-grabbing text-neutral-300 hover:text-neutral-500">
+                                                        <GripVertical className="w-4 h-4" />
+                                                    </Reorder.Item>
+
                                                     <div className="w-12 h-16 relative rounded-md overflow-hidden bg-neutral-100 border border-neutral-200">
                                                         <Image
                                                             src={product.image}
@@ -194,9 +246,9 @@ export default function AdminProductsPage() {
                                                     </button>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </Reorder.Item>
                                     ))}
-                                </tbody>
+                                </Reorder.Group>
                             </table>
                         </div>
 

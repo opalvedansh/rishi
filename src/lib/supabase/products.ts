@@ -17,6 +17,7 @@ export interface Product {
     rating?: number;
     review_count?: number;
     in_stock?: boolean;
+    sort_order?: number;
     created_at?: string;
 }
 
@@ -39,6 +40,7 @@ export function transformProduct(dbProduct: any): Product {
         rating: dbProduct.rating,
         review_count: dbProduct.review_count,
         in_stock: dbProduct.in_stock ?? true,
+        sort_order: dbProduct.sort_order ?? 0,
         created_at: dbProduct.created_at,
     };
 }
@@ -50,7 +52,7 @@ export async function getProducts(): Promise<Product[]> {
     const { data, error } = await supabase
         .from("products")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("sort_order", { ascending: true });
 
     if (error) {
         console.error("Error fetching products:", error);
@@ -159,6 +161,31 @@ export async function deleteProduct(id: string): Promise<boolean> {
     if (error) {
         console.error("Error deleting product:", error);
         throw new Error(error.message);
+    }
+
+    return true;
+}
+
+// Update product sort order (Admin)
+export async function updateProductOrder(items: { id: string; sort_order: number }[]): Promise<boolean> {
+    const supabase = createClient();
+
+    // We use Promise.all to update in parallel as Supabase upsert with partial data 
+    // can be tricky regarding not-null constraints if viewed as an insert.
+    // For small batch sizes (products < 100), this is acceptable.
+    const updates = items.map((item) =>
+        supabase
+            .from("products")
+            .update({ sort_order: item.sort_order })
+            .eq("id", item.id)
+    );
+
+    const results = await Promise.all(updates);
+
+    const hasError = results.some((result) => result.error);
+    if (hasError) {
+        console.error("Error updating product order");
+        return false;
     }
 
     return true;

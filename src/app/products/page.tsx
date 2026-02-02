@@ -17,7 +17,7 @@ export default function ShopPage() {
     const [products, setProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
-    const [sortOption, setSortOption] = useState("newest");
+    const [sortOption, setSortOption] = useState("featured");
     const [filters, setFilters] = useState<{
         category: string;
         minPrice: number;
@@ -91,7 +91,9 @@ export default function ShopPage() {
         } else if (sortOption === "price-desc") {
             result = [...result].sort((a, b) => b.price - a.price);
         } else if (sortOption === "newest") {
-            // Already sorted by created_at desc from database
+            result = [...result].sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
+        } else if (sortOption === "featured") {
+            // Already sorted by sort_order ascending from database
             result = result;
         }
 
@@ -139,6 +141,7 @@ export default function ShopPage() {
                                         onChange={setSortOption}
                                         className="w-48"
                                         options={[
+                                            { label: "Featured", value: "featured" },
                                             { label: "Newest Arrivals", value: "newest" },
                                             { label: "Price: Low to High", value: "price-asc" },
                                             { label: "Price: High to Low", value: "price-desc" },
