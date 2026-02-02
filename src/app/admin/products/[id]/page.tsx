@@ -195,7 +195,7 @@ export default function EditProductPage({ params }: PageProps) {
                 title: formData.title,
                 handle: formData.handle || generateHandle(formData.title),
                 price: parseInt(formData.price),
-                original_price: formData.originalPrice ? parseInt(formData.originalPrice) : undefined,
+                originalPrice: formData.originalPrice ? parseInt(formData.originalPrice) : undefined,
                 image: images[0], // Primary image
                 images: images, // All images
                 tag: formData.tag || undefined,
@@ -644,8 +644,8 @@ export default function EditProductPage({ params }: PageProps) {
                                     type="button"
                                     onClick={() => setFormData({ ...formData, inStock: true })}
                                     className={`py-4 px-4 rounded-xl text-sm font-medium transition-all border-2 flex flex-col items-center justify-center gap-2 ${formData.inStock
-                                            ? "bg-green-50 text-green-700 border-green-500"
-                                            : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-400"
+                                        ? "bg-green-50 text-green-700 border-green-500"
+                                        : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-400"
                                         }`}
                                 >
                                     <PackageCheck className="w-6 h-6" />
@@ -655,8 +655,8 @@ export default function EditProductPage({ params }: PageProps) {
                                     type="button"
                                     onClick={() => setFormData({ ...formData, inStock: false })}
                                     className={`py-4 px-4 rounded-xl text-sm font-medium transition-all border-2 flex flex-col items-center justify-center gap-2 ${!formData.inStock
-                                            ? "bg-red-50 text-red-700 border-red-500"
-                                            : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-400"
+                                        ? "bg-red-50 text-red-700 border-red-500"
+                                        : "bg-white text-neutral-600 border-neutral-200 hover:border-neutral-400"
                                         }`}
                                 >
                                     <PackageX className="w-6 h-6" />
