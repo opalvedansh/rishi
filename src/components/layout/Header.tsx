@@ -19,7 +19,7 @@ const Header = () => {
     return (
         <>
             <header className="sticky top-0 z-50 bg-[var(--color-main-bg)] border-b border-[var(--color-border)]">
-                <Container className="flex items-center justify-between h-20">
+                <Container fluid className="flex items-center justify-between h-20">
                     {/* LEFT SECTION (w-1/3) - Mobile Toggle & Desktop Nav */}
                     <div className="w-1/3 flex items-center justify-start">
                         {/* Mobile Toggle */}
