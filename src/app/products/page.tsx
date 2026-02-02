@@ -1,18 +1,21 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Container from "@/components/ui/Container";
 import ProductCard from "@/components/ui/ProductCard";
 import FadeIn from "@/components/animations/FadeIn";
-import { products } from "@/data/products";
+import { getProducts, Product } from "@/lib/supabase/products";
 import ProductFilterSidebar from "@/components/products/ProductFilterSidebar";
-import { ChevronDown, SlidersHorizontal } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { SlidersHorizontal, Loader2 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-
 import CustomSelect from "@/components/ui/CustomSelect";
 
+// Fallback to static data if database is empty
+import { products as staticProducts } from "@/data/products";
+
 export default function ShopPage() {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
     const [sortOption, setSortOption] = useState("newest");
     const [filters, setFilters] = useState<{
@@ -28,6 +31,38 @@ export default function ShopPage() {
         sizes: [],
         colors: [],
     });
+
+    // Fetch products from database
+    useEffect(() => {
+        async function fetchProducts() {
+            setIsLoading(true);
+            try {
+                const dbProducts = await getProducts();
+                // Use database products if available, otherwise fall back to static data
+                if (dbProducts.length > 0) {
+                    setProducts(dbProducts);
+                } else {
+                    // Convert static products to match the database format
+                    setProducts(staticProducts.map(p => ({
+                        ...p,
+                        original_price: p.originalPrice,
+                        review_count: p.reviewCount,
+                    })));
+                }
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                // Fallback to static data on error
+                setProducts(staticProducts.map(p => ({
+                    ...p,
+                    original_price: p.originalPrice,
+                    review_count: p.reviewCount,
+                })));
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        fetchProducts();
+    }, []);
 
     const filteredAndSortedProducts = useMemo(() => {
         let result = products;
@@ -56,13 +91,20 @@ export default function ShopPage() {
         } else if (sortOption === "price-desc") {
             result = [...result].sort((a, b) => b.price - a.price);
         } else if (sortOption === "newest") {
-            // Assuming higher ID is newer for now, or just default order
-            // In real app, use createdAt date. Here we can use ID reverse or just keep initial order as "newest" mock
+            // Already sorted by created_at desc from database
             result = result;
         }
 
         return result;
-    }, [filters, sortOption]);
+    }, [products, filters, sortOption]);
+
+    if (isLoading) {
+        return (
+            <div className="bg-white min-h-screen pt-24 md:pt-32 pb-24 flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-neutral-300" />
+            </div>
+        );
+    }
 
     return (
         <div className="bg-white min-h-screen pt-24 md:pt-32 pb-24">

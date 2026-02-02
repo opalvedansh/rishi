@@ -7,11 +7,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import Container from "@/components/ui/Container";
 import SearchOverlay from "@/components/ui/SearchOverlay";
 import { useShop } from "@/context/ShopContext";
+import { useAuth } from "@/context/AuthContext";
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const { cartCount, wishlist } = useShop();
+    const { user } = useAuth();
 
     return (
         <>
@@ -63,9 +65,18 @@ const Header = () => {
                             >
                                 <Search className="w-5 h-5" />
                             </button>
-                            <Link href="/account" className="hidden lg:block p-2 hover:opacity-70 transition-opacity">
-                                <User className="w-5 h-5" />
-                            </Link>
+
+                            {/* User Auth State */}
+                            {user ? (
+                                <Link href="/account" className="hidden lg:block p-2 hover:opacity-70 transition-opacity relative group" title="My Account">
+                                    <User className="w-5 h-5 text-black" />
+                                    <span className="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white" />
+                                </Link>
+                            ) : (
+                                <Link href="/login" className="hidden lg:block text-xs font-bold uppercase tracking-widest hover:text-gray-600 transition-colors">
+                                    Login
+                                </Link>
+                            )}
                             <Link href="/wishlist" className="hidden lg:block p-2 hover:opacity-70 transition-opacity relative">
                                 <Heart className="w-5 h-5" />
                                 {wishlist.length > 0 && (
@@ -133,9 +144,9 @@ const Header = () => {
                                 </nav>
 
                                 <div className="mt-auto pt-8 border-t border-neutral-100 flex flex-col gap-4">
-                                    <Link href="/account" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-neutral-600">
+                                    <Link href={user ? "/account" : "/login"} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-neutral-600">
                                         <User className="w-5 h-5" />
-                                        <span>My Account</span>
+                                        <span>{user ? "My Account" : "Sign In"}</span>
                                     </Link>
                                     <Link href="/wishlist" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-neutral-600">
                                         <Heart className="w-5 h-5" />

@@ -1,15 +1,34 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Container from "@/components/ui/Container";
 import { useShop } from "@/context/ShopContext";
+import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
-import { X, ShoppingBag, ArrowRight } from "lucide-react";
+import { X, ShoppingBag, ArrowRight, Loader2 } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import { cn } from "@/lib/utils";
 
 export default function WishlistPage() {
     const { wishlist, toggleWishlist, addToCart } = useShop();
+    const { user, isLoading } = useAuth();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!isLoading && !user) {
+            router.push("/login?redirect=/wishlist");
+        }
+    }, [user, isLoading, router]);
+
+    if (isLoading || !user) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-white">
+                <Loader2 className="w-8 h-8 animate-spin text-neutral-300" />
+            </div>
+        );
+    }
 
     const handleMoveToBag = (product: any) => {
         addToCart(product, 1, product.sizes?.[0] || "M"); // Default to Medium for quick add

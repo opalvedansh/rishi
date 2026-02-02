@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
 import { ShopProvider } from "@/context/ShopContext";
+import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,12 +34,14 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} antialiased`}
       >
         <SmoothScrollProvider>
-          <ShopProvider>
-            <AnnouncementBar />
-            <Header />
-            <main>{children}</main>
-            <Footer /> {/* Added Footer component */}
-          </ShopProvider>
+          <AuthProvider>
+            <ShopProvider>
+              <AnnouncementBar />
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </ShopProvider>
+          </AuthProvider>
         </SmoothScrollProvider>
       </body>
     </html>

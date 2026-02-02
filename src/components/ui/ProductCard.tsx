@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, Plus, Check } from "lucide-react";
+import { Heart, Plus, Check, PackageX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Product } from "@/data/products";
 import { useShop } from "@/context/ShopContext";
@@ -21,10 +21,13 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
     if (!product) return null;
 
     const isLiked = isInWishlist(product.id || "");
+    const inStock = product.in_stock ?? true;
 
     const handleQuickAdd = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
+
+        if (!inStock) return;
 
         setIsAdding(true);
         // Default to first size or "M"
@@ -46,9 +49,17 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
         <div className={cn("group block relative", className)}>
             <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100 mb-4 cursor-pointer">
                 {/* Tag ID */}
-                {product.tag && (
+                {product.tag && inStock && (
                     <span className="absolute top-0 left-0 z-10 bg-black text-white text-[10px] uppercase font-medium px-3 py-1.5 tracking-wider">
                         {product.tag}
+                    </span>
+                )}
+
+                {/* Out of Stock Badge */}
+                {!inStock && (
+                    <span className="absolute top-0 left-0 z-10 bg-red-500 text-white text-[10px] uppercase font-semibold px-3 py-1.5 tracking-wider flex items-center gap-1">
+                        <PackageX className="w-3 h-3" />
+                        Out of Stock
                     </span>
                 )}
 
@@ -78,22 +89,29 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
                     </div>
 
                     {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
+                    <div className={cn(
+                        "absolute inset-0 transition-colors duration-500",
+                        !inStock
+                            ? "bg-black/20"
+                            : "bg-black/0 group-hover:bg-black/5"
+                    )} />
                 </Link>
 
                 {/* "Quick Add" Circle Button on Hover */}
-                <button
-                    onClick={handleQuickAdd}
-                    disabled={isAdding}
-                    className={cn(
-                        "absolute bottom-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-lg transition-all duration-300 delay-100",
-                        isAdding
-                            ? "bg-black text-white opacity-100 translate-y-0"
-                            : "bg-white text-black opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 hover:bg-black hover:text-white"
-                    )}
-                >
-                    {isAdding ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
-                </button>
+                {inStock && (
+                    <button
+                        onClick={handleQuickAdd}
+                        disabled={isAdding}
+                        className={cn(
+                            "absolute bottom-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-lg transition-all duration-300 delay-100",
+                            isAdding
+                                ? "bg-black text-white opacity-100 translate-y-0"
+                                : "bg-white text-black opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 hover:bg-black hover:text-white"
+                        )}
+                    >
+                        {isAdding ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                    </button>
+                )}
             </div>
 
             <div className="flex flex-col items-start px-1">

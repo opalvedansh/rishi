@@ -1,16 +1,36 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Container from "@/components/ui/Container";
 import { useShop } from "@/context/ShopContext";
+import { useAuth } from "@/context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
-import { Minus, Plus, Trash2, ArrowRight, ShieldCheck, Truck } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowRight, ShieldCheck, Truck, Loader2 } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import { cn } from "@/lib/utils";
 
 export default function CartPage() {
     const { cart, removeFromCart, updateQuantity, cartTotal } = useShop();
+    const { user, isLoading } = useAuth();
+    const router = useRouter();
     const FREE_SHIPPING_THRESHOLD = 5000;
+
+    useEffect(() => {
+        if (!isLoading && !user) {
+            router.push("/login?redirect=/cart");
+        }
+    }, [user, isLoading, router]);
+
+    if (isLoading || !user) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-white">
+                <Loader2 className="w-8 h-8 animate-spin text-neutral-300" />
+            </div>
+        );
+    }
+
     const progress = Math.min((cartTotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
     const remainingForFreeShipping = FREE_SHIPPING_THRESHOLD - cartTotal;
 
@@ -171,10 +191,10 @@ export default function CartPage() {
                                         <span className="font-display text-3xl">₹{cartTotal.toLocaleString()}</span>
                                     </div>
 
-                                    <button className="w-full bg-black text-white h-16 text-xs font-bold uppercase tracking-[0.2em] hover:bg-neutral-900 transition-all flex items-center justify-center gap-4 group mb-6">
+                                    <Link href="/checkout" className="w-full bg-black text-white h-16 text-xs font-bold uppercase tracking-[0.2em] hover:bg-neutral-900 transition-all flex items-center justify-center gap-4 group mb-6">
                                         <span>Proceed to Checkout</span>
                                         <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                                    </button>
+                                    </Link>
 
                                     <div className="flex items-center justify-center gap-2 text-neutral-500 text-xs">
                                         <ShieldCheck className="w-4 h-4" />
