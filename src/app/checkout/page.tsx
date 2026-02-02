@@ -209,7 +209,7 @@ export default function CheckoutPage() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
                     {/* Left Column: Form */}
-                    <FadeIn>
+                    <FadeIn className="order-2 lg:order-1">
                         <form onSubmit={handleRazorpayPayment}>
                             {/* Contact Section */}
                             <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm mb-6">
@@ -372,7 +372,7 @@ export default function CheckoutPage() {
                     </FadeIn>
 
                     {/* Right Column: Order Summary */}
-                    <FadeIn delay={0.1}>
+                    <FadeIn delay={0.1} className="order-1 lg:order-2">
                         <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm sticky top-32">
                             <h2 className="font-display text-xl mb-6">Order Summary</h2>
 
