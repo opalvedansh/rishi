@@ -66,7 +66,7 @@ function transformToFrontend(dbProduct: DBProduct): Product {
         id: dbProduct.id,
         title: dbProduct.title,
         price: dbProduct.price,
-        originalPrice: dbProduct.original_price,
+        originalPrice: dbProduct.originalPrice,
         image: dbProduct.image,
         handle: dbProduct.handle,
         tag: dbProduct.tag,
