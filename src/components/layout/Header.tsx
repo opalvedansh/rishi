@@ -20,36 +20,20 @@ const Header = () => {
         <>
             <header className="sticky top-0 z-50 bg-[var(--color-main-bg)] border-b border-[var(--color-border)]">
                 <Container className="flex items-center justify-between h-20">
-                    {/* Mobile Menu & Search (Left) */}
-                    <div className="flex items-center gap-4 lg:hidden w-1/3">
-                        <button className="p-2 -ml-2" onClick={() => setIsMenuOpen(true)}>
-                            <Menu className="w-6 h-6" />
-                        </button>
-                        <button className="p-2" onClick={() => setIsSearchOpen(true)}>
-                            <Search className="w-5 h-5" />
-                        </button>
-                    </div>
+                    {/* LEFT SECTION (w-1/3) - Mobile Toggle & Desktop Nav */}
+                    <div className="w-1/3 flex items-center justify-start">
+                        {/* Mobile Toggle */}
+                        <div className="flex items-center gap-4 lg:hidden">
+                            <button className="p-2 -ml-2" onClick={() => setIsMenuOpen(true)}>
+                                <Menu className="w-6 h-6" />
+                            </button>
+                            <button className="p-2" onClick={() => setIsSearchOpen(true)}>
+                                <Search className="w-5 h-5" />
+                            </button>
+                        </div>
 
-                    {/* Desktop Menu (Left - Spacer) */}
-                    <div className="hidden lg:block w-1/3" />
-
-                    {/* Logo (Center) */}
-                    <div className="w-1/3 flex justify-center">
-                        <Link href="/" className="relative h-20 w-auto aspect-[3/1]">
-                            <Image
-                                src="/doree-logo.png"
-                                alt="Doree"
-                                fill
-                                className="object-contain"
-                                priority
-                            />
-                        </Link>
-                    </div>
-
-                    {/* Icons (Right) */}
-                    <div className="flex items-center justify-between w-1/3 pl-4 md:pl-8">
-                        {/* Desktop Navigation */}
-                        <nav className="hidden md:flex items-center gap-6">
+                        {/* Desktop Navigation & Search */}
+                        <nav className="hidden lg:flex items-center gap-6">
                             <Link href="/about" className="text-xs font-bold hover:text-gray-600 transition-colors uppercase tracking-widest">
                                 About
                             </Link>
@@ -62,45 +46,57 @@ const Header = () => {
                             <Link href="/blog" className="text-xs font-bold hover:text-gray-600 transition-colors uppercase tracking-widest">
                                 Blog
                             </Link>
-                        </nav>
-
-                        {/* Icons Group */}
-                        <div className="flex items-center justify-end gap-3 lg:gap-5 ml-auto">
                             <button
-                                className="hidden lg:block p-2 hover:opacity-70 transition-opacity"
+                                className="p-2 hover:opacity-70 transition-opacity"
                                 onClick={() => setIsSearchOpen(true)}
                             >
                                 <Search className="w-5 h-5" />
                             </button>
+                        </nav>
+                    </div>
 
-                            {/* User Auth State */}
-                            {user ? (
-                                <Link href="/account" className="hidden lg:block p-2 hover:opacity-70 transition-opacity relative group" title="My Account">
-                                    <User className="w-5 h-5 text-black" />
-                                    <span className="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white" />
-                                </Link>
-                            ) : (
-                                <Link href="/login" className="hidden lg:block text-xs font-bold uppercase tracking-widest hover:text-gray-600 transition-colors">
-                                    Login
-                                </Link>
+                    {/* CENTER SECTION (w-1/3) - Logo */}
+                    <div className="w-1/3 flex justify-center">
+                        <Link href="/" className="relative h-20 w-auto aspect-[3/1]">
+                            <Image
+                                src="/doree-logo.png"
+                                alt="Doree"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </Link>
+                    </div>
+
+                    {/* RIGHT SECTION (w-1/3) - User, Wishlist, Cart */}
+                    <div className="w-1/3 flex items-center justify-end gap-3 lg:gap-5">
+                        {/* User Auth State */}
+                        {user ? (
+                            <Link href="/account" className="hidden lg:block p-2 hover:opacity-70 transition-opacity relative group" title="My Account">
+                                <User className="w-5 h-5 text-black" />
+                                <span className="absolute -bottom-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white" />
+                            </Link>
+                        ) : (
+                            <Link href="/login" className="hidden lg:block text-xs font-bold uppercase tracking-widest hover:text-gray-600 transition-colors">
+                                Login
+                            </Link>
+                        )}
+                        <Link href="/wishlist" className="hidden lg:block p-2 hover:opacity-70 transition-opacity relative">
+                            <Heart className="w-5 h-5" />
+                            {wishlist.length > 0 && (
+                                <span className="absolute top-0 right-0 w-4 h-4 text-[10px] bg-black text-white rounded-full flex items-center justify-center">
+                                    {wishlist.length}
+                                </span>
                             )}
-                            <Link href="/wishlist" className="hidden lg:block p-2 hover:opacity-70 transition-opacity relative">
-                                <Heart className="w-5 h-5" />
-                                {wishlist.length > 0 && (
-                                    <span className="absolute top-0 right-0 w-4 h-4 text-[10px] bg-black text-white rounded-full flex items-center justify-center">
-                                        {wishlist.length}
-                                    </span>
-                                )}
-                            </Link>
-                            <Link href="/cart" className="p-2 hover:opacity-70 transition-opacity relative">
-                                <ShoppingBag className="w-5 h-5" />
-                                {cartCount > 0 && (
-                                    <span className="absolute top-0 right-0 w-4 h-4 text-[10px] bg-[var(--color-primary)] text-white rounded-full flex items-center justify-center">
-                                        {cartCount}
-                                    </span>
-                                )}
-                            </Link>
-                        </div>
+                        </Link>
+                        <Link href="/cart" className="p-2 hover:opacity-70 transition-opacity relative">
+                            <ShoppingBag className="w-5 h-5" />
+                            {cartCount > 0 && (
+                                <span className="absolute top-0 right-0 w-4 h-4 text-[10px] bg-[var(--color-primary)] text-white rounded-full flex items-center justify-center">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
                     </div>
                 </Container>
 
