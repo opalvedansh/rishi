@@ -5,7 +5,7 @@ export interface Product {
     title: string;
     handle: string;
     price: number;
-    original_price?: number;
+    originalPrice?: number;
     image: string;
     images?: string[];
     tag?: string;
@@ -28,7 +28,7 @@ export function transformProduct(dbProduct: any): Product {
         title: dbProduct.title,
         handle: dbProduct.handle,
         price: dbProduct.price,
-        original_price: dbProduct.original_price,
+        originalPrice: dbProduct.original_price,
         image: dbProduct.image,
         images: dbProduct.images || [],
         tag: dbProduct.tag,
@@ -90,7 +90,7 @@ export async function createProduct(product: Omit<Product, "id" | "created_at">)
             title: product.title,
             handle: product.handle,
             price: product.price,
-            original_price: product.original_price,
+            original_price: product.originalPrice,
             image: product.image,
             images: product.images || [],
             tag: product.tag,
@@ -124,7 +124,7 @@ export async function updateProduct(id: string, updates: Partial<Product>): Prom
             title: updates.title,
             handle: updates.handle,
             price: updates.price,
-            original_price: updates.original_price,
+            original_price: updates.originalPrice,
             image: updates.image,
             images: updates.images,
             tag: updates.tag,
