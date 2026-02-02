@@ -45,6 +45,25 @@ export function transformProduct(dbProduct: any): Product {
     };
 }
 
+// Search products
+export async function searchProducts(query: string): Promise<Product[]> {
+    const supabase = createClient();
+
+    const { data, error } = await supabase
+        .from("products")
+        .select("*")
+        .or(`title.ilike.%${query}%,category.ilike.%${query}%,tag.ilike.%${query}%`)
+        .order("sort_order", { ascending: true })
+        .limit(10);
+
+    if (error) {
+        console.error("Error searching products:", error);
+        return [];
+    }
+
+    return (data || []).map(transformProduct);
+}
+
 // Fetch all products
 export async function getProducts(): Promise<Product[]> {
     const supabase = createClient();

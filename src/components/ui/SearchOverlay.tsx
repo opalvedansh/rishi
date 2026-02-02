@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { products, Product } from "@/data/products";
+import { searchProducts, Product, getProducts } from "@/lib/supabase/products";
 import Container from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 
@@ -22,8 +22,16 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
-    // Trending products (using first 3 for demo)
-    const trendingProducts = products.slice(0, 3);
+    const [trendingProducts, setTrendingProducts] = useState<Product[]>([]);
+
+    // Fetch trending products on mount
+    useEffect(() => {
+        const fetchTrending = async () => {
+            const allProducts = await getProducts();
+            setTrendingProducts(allProducts.slice(0, 3));
+        };
+        fetchTrending();
+    }, []);
 
     // Auto-focus input when opened
     useEffect(() => {
@@ -44,20 +52,19 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
 
     // Filter products based on query
     useEffect(() => {
-        if (!query.trim()) {
-            setResults([]);
-            return;
-        }
+        const fetchResults = async () => {
+            if (!query.trim()) {
+                setResults([]);
+                return;
+            }
 
-        const lowerQuery = query.toLowerCase();
-        const filtered = products.filter(product =>
-            product.title.toLowerCase().includes(lowerQuery) ||
-            product.category?.toLowerCase().includes(lowerQuery) ||
-            product.tag?.toLowerCase().includes(lowerQuery)
-        ).slice(0, 6);
+            const searchResults = await searchProducts(query);
+            setResults(searchResults);
+            setSelectedIndex(-1);
+        };
 
-        setResults(filtered);
-        setSelectedIndex(-1); // Reset selection on new query
+        const timeoutId = setTimeout(fetchResults, 300); // Debounce
+        return () => clearTimeout(timeoutId);
     }, [query]);
 
     // Keyboard Navigation
