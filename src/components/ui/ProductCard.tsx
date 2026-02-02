@@ -139,6 +139,11 @@ const ProductCard = ({ product, className, index = 0 }: ProductCardProps) => {
                     {product.originalPrice && (
                         <span className="text-neutral-400 line-through text-xs">₹{product.originalPrice.toLocaleString()}</span>
                     )}
+                    {product.originalPrice && product.originalPrice > product.price && (
+                        <span className="text-[10px] font-bold text-green-600">
+                            {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
+                        </span>
+                    )}
                 </div>
             </div>
         </motion.div>

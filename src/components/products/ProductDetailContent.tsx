@@ -340,8 +340,10 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
                                                 <span className="text-lg text-neutral-400 line-through">
                                                     ₹{product.originalPrice.toLocaleString()}
                                                 </span>
-                                                <span className="text-sm font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded">
-                                                    Save ₹{(product.originalPrice - product.price).toLocaleString()}
+                                                <span className="text-sm font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded flex items-center gap-1">
+                                                    <span>{discount}% OFF</span>
+                                                    <span>•</span>
+                                                    <span>Save ₹{(product.originalPrice - product.price).toLocaleString()}</span>
                                                 </span>
                                             </>
                                         )}
