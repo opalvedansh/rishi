@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Container from "@/components/ui/Container";
 import FadeIn from "@/components/animations/FadeIn";
 import { cn } from "@/lib/utils";
+import { getProducts } from "@/lib/supabase/products";
 
 interface Collection {
     title: string;
@@ -14,31 +16,58 @@ interface Collection {
     size: "large" | "small";
 }
 
-const collections: Collection[] = [
+const defaultCollections: Collection[] = [
     {
         title: "Trousers",
-        image: "/assets/IMG_2258.PNG", // Using existing 2258 found in list
-        count: 12,
+        image: "/assets/IMG_2258.PNG",
+        count: 0,
         slug: "trousers",
         size: "large",
     },
     {
         title: "Knitwear",
         image: "/assets/IMG_2363.PNG",
-        count: 8,
+        count: 0,
         slug: "knitwear",
         size: "small",
     },
     {
         title: "Outerwear",
         image: "/assets/IMG_2176.PNG",
-        count: 5,
+        count: 0,
         slug: "outerwear",
         size: "small",
     },
 ];
 
 const CollectionGrid = () => {
+    const [collections, setCollections] = useState<Collection[]>(defaultCollections);
+
+    useEffect(() => {
+        async function loadCollectionCounts() {
+            try {
+                const products = await getProducts();
+
+                // Count products by category
+                const categoryCounts: Record<string, number> = {};
+                products.forEach(product => {
+                    const category = product.category?.toLowerCase() || 'other';
+                    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+                });
+
+                // Update collection counts
+                setCollections(prev => prev.map(collection => ({
+                    ...collection,
+                    count: categoryCounts[collection.slug] || 0,
+                })));
+            } catch (error) {
+                console.error("Error loading collection counts:", error);
+            }
+        }
+
+        loadCollectionCounts();
+    }, []);
+
     return (
         <section className="py-24 bg-white">
             <Container>
@@ -60,7 +89,7 @@ const CollectionGrid = () => {
                         >
                             <FadeIn delay={index * 0.1} fullWidth className="h-full">
                                 <Link
-                                    href={`/collections/${collection.slug}`}
+                                    href={`/products?category=${collection.slug}`}
                                     className="block w-full h-full relative overflow-hidden"
                                 >
                                     <div className="absolute inset-0 bg-neutral-100 transition-transform duration-700 group-hover:scale-105">
