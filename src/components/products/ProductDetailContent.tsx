@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { useShop } from "@/context/ShopContext";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import { motion, AnimatePresence } from "framer-motion";
+import ReviewSection from "@/components/reviews/ReviewSection";
 
 interface ProductDetailContentProps {
     product: Product;
@@ -712,6 +713,9 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
                     </div>
                 </div>
             </Container>
+
+            {/* Review Section */}
+            <ReviewSection productId={product.id} />
 
             {/* Related Products */}
             {relatedProducts.length > 0 && (
