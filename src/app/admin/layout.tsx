@@ -29,7 +29,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // Admin email whitelist
-    const ADMIN_EMAILS = ["vedanshlovesmom88@gmail.com"];
+    const ADMIN_EMAILS = ["vedanshlovesmom88@gmail.com", "doreebysvd@gmail.com", "masterrishi7@gmail.com"];
 
     // Protect Admin Route
     useEffect(() => {
