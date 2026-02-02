@@ -746,16 +746,18 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
                     </div>
                     <button
                         onClick={handleAddToCart}
-                        disabled={isAdding}
+                        disabled={isAdding || !inStock}
                         className={cn(
                             "flex-[2] h-12 rounded-lg font-bold text-sm uppercase tracking-wider transition-all flex items-center justify-center gap-2",
-                            isAdding
-                                ? "bg-green-500 text-white"
-                                : "bg-black text-white"
+                            !inStock
+                                ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
+                                : isAdding
+                                    ? "bg-green-500 text-white"
+                                    : "bg-black text-white"
                         )}
                     >
                         {isAdding ? <Check className="w-4 h-4" /> : null}
-                        {isAdding ? "Added!" : "Add to Cart"}
+                        {isAdding ? "Added!" : !inStock ? "Sold Out" : "Add to Cart"}
                     </button>
                 </div>
             </div>

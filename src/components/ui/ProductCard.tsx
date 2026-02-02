@@ -65,7 +65,7 @@ const ProductCard = ({ product, className, index = 0 }: ProductCardProps) => {
 
                 {/* Out of Stock Badge */}
                 {!inStock && (
-                    <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-[2px] flex items-center justify-center">
+                    <div className="absolute inset-0 z-10 bg-white/40 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
                         <span className="bg-black text-white text-[10px] uppercase font-bold px-3 py-1.5 tracking-wider flex items-center gap-1">
                             <PackageX className="w-3 h-3" />
                             Sold Out
