@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Container from "@/components/ui/Container";
 import FadeIn from "@/components/animations/FadeIn";
@@ -19,6 +19,7 @@ import { useShop } from "@/context/ShopContext";
 import SizeGuideModal from "@/components/ui/SizeGuideModal";
 import { motion, AnimatePresence } from "framer-motion";
 import ReviewSection from "@/components/reviews/ReviewSection";
+import { getReviewsByProductId } from "@/lib/supabase/reviews";
 
 interface ProductDetailContentProps {
     product: Product;
@@ -48,9 +49,27 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
         "Machine Washable"
     ];
     const images = product.images && product.images.length > 0 ? product.images : [product.image];
-    const rating = product.rating || 4.8;
-    const reviewCount = product.reviewCount || 128;
     const inStock = product.in_stock ?? true;
+
+    // Dynamic rating and review count from approved reviews
+    const [rating, setRating] = useState(product.rating || 0);
+    const [reviewCount, setReviewCount] = useState(product.reviewCount || 0);
+
+    useEffect(() => {
+        async function fetchReviewStats() {
+            const reviews = await getReviewsByProductId(product.id);
+            if (reviews.length > 0) {
+                const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+                const avgRating = totalRating / reviews.length;
+                setRating(Math.round(avgRating * 10) / 10); // Round to 1 decimal
+                setReviewCount(reviews.length);
+            } else {
+                setRating(0);
+                setReviewCount(0);
+            }
+        }
+        fetchReviewStats();
+    }, [product.id]);
 
     const handleAddToCart = () => {
         setIsAdding(true);
@@ -321,14 +340,12 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
                                                 />
                                             ))}
                                         </div>
-                                        <span className="text-sm font-bold text-neutral-900 ml-1">{rating}</span>
+                                        <span className="text-sm font-bold text-neutral-900 ml-1">
+                                            {reviewCount > 0 ? rating.toFixed(1) : "N/A"}
+                                        </span>
                                     </div>
                                     <span className="text-sm text-[#007185] hover:text-[#C9A86C] cursor-pointer hover:underline">
-                                        {reviewCount} ratings
-                                    </span>
-                                    <span className="text-neutral-300">|</span>
-                                    <span className="text-sm text-[#007185] hover:text-[#C9A86C] cursor-pointer hover:underline">
-                                        50+ bought in past month
+                                        {reviewCount > 0 ? `${reviewCount} ${reviewCount === 1 ? 'review' : 'reviews'}` : 'No reviews yet'}
                                     </span>
                                 </div>
 
