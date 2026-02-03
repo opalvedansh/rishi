@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Twitter, ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
+import { Instagram, ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { motion } from "framer-motion";
 
@@ -142,15 +142,14 @@ const Footer = () => {
 
                         {/* Social Icons */}
                         <div className="flex gap-3">
-                            {[Instagram, Twitter, Facebook].map((Icon, i) => (
-                                <Link
-                                    key={i}
-                                    href="#"
-                                    className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#E8DFD0]/10 hover:border-[#D4A574]/50 hover:bg-[#D4A574]/10 transition-all duration-300"
-                                >
-                                    <Icon className="w-4 h-4 text-[#E8DFD0]/50 group-hover:text-[#D4A574] transition-colors duration-300" />
-                                </Link>
-                            ))}
+                            <Link
+                                href="https://www.instagram.com/doree.clothing/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex items-center justify-center w-10 h-10 rounded-full border border-[#E8DFD0]/10 hover:border-[#D4A574]/50 hover:bg-[#D4A574]/10 transition-all duration-300"
+                            >
+                                <Instagram className="w-4 h-4 text-[#E8DFD0]/50 group-hover:text-[#D4A574] transition-colors duration-300" />
+                            </Link>
                         </div>
                     </motion.div>
 
