@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Instagram, Twitter, ArrowRight } from "lucide-react";
+import { Facebook, Instagram, Twitter, ArrowRight, ArrowUpRight } from "lucide-react";
 import Container from "@/components/ui/Container";
-import FadeIn from "@/components/animations/FadeIn";
-import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const footerLinks = {
     shop: [
@@ -31,105 +30,171 @@ const footerLinks = {
 
 const Footer = () => {
     return (
-        <footer className="bg-black text-white pt-24 pb-12 overflow-hidden">
-            <Container>
-                {/* Newsletter Section - Big Impact */}
-                <div className="mb-24 flex flex-col items-center text-center">
-                    <FadeIn direction="up">
-                        <h2 className="font-display text-4xl md:text-6xl mb-6">Join Our World</h2>
-                    </FadeIn>
-                    <FadeIn direction="up" delay={0.1}>
-                        <p className="text-white/60 text-lg md:text-xl font-light mb-10 max-w-lg mx-auto">
-                            Subscribe to receive updates, access to exclusive deals, and more.
-                        </p>
-                    </FadeIn>
+        <footer className="relative bg-[#050505] text-[#E0D5C7] pt-32 pb-12 overflow-hidden">
+            {/* Ambient Background Gradient */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#3d2817]/10 blur-[150px] rounded-full mix-blend-screen" />
+            </div>
 
-                    <FadeIn direction="up" delay={0.2} fullWidth className="max-w-md mx-auto w-full">
-                        <form className="relative group">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="w-full bg-transparent border-b border-white/30 py-4 text-lg outline-none focus:border-white transition-colors placeholder:text-white/30 text-white"
-                            />
-                            <button type="submit" className="absolute right-0 top-1/2 -translate-y-1/2 text-white hover:text-white/70 transition-colors">
-                                <ArrowRight className="w-6 h-6" />
-                            </button>
-                        </form>
-                    </FadeIn>
-                </div>
+            <Container className="relative z-10">
+                {/* Top Section: Newsletter & Brand Message */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-32">
+                    <div className="lg:col-span-7 flex flex-col justify-between">
+                        <div>
+                            <motion.h2
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8 }}
+                                className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-8 text-[#F3EAD8]"
+                            >
+                                Join the <br /> <span className="italic text-white/40">movement.</span>
+                            </motion.h2>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.1 }}
+                                className="text-lg md:text-xl font-light text-white/50 max-w-md"
+                            >
+                                Be the first to receive updates on new collections, exclusive events, and style inspiration.
+                            </motion.p>
+                        </div>
+                    </div>
 
-                {/* Links Grid */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20 border-t border-white/10 pt-16">
-                    {/* Brand Column */}
-                    <div className="col-span-2 lg:col-span-1">
-                        <FadeIn delay={0.1}>
-                            <Link href="/" className="font-display text-3xl font-bold tracking-tight mb-6 block">Doree</Link>
-                            <p className="text-white/60 mb-6 font-light">
-                                Redefining modern luxury with timeless essentials and exceptional craftsmanship.
-                            </p>
-                            <div className="flex gap-4">
-                                {[Instagram, Facebook, Twitter].map((Icon, i) => (
-                                    <Link key={i} href="#" className="p-2 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-300">
-                                        <Icon className="w-5 h-5" />
-                                    </Link>
-                                ))}
+                    <div className="lg:col-span-5 flex items-end">
+                        <motion.form
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="w-full relative group"
+                        >
+                            <div className="relative overflow-hidden w-full">
+                                <input
+                                    type="email"
+                                    placeholder="Email Address"
+                                    className="w-full bg-transparent border-b border-white/20 py-6 text-xl md:text-2xl outline-none text-[#F3EAD8] placeholder:text-white/20 focus:border-[#F3EAD8] transition-all duration-500 pr-12"
+                                />
+                                <button
+                                    type="submit"
+                                    className="absolute right-0 top-1/2 -translate-y-1/2 text-white/40 group-hover:text-[#F3EAD8] transition-colors duration-300"
+                                >
+                                    <ArrowRight className="w-8 h-8" />
+                                </button>
+                                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#F3EAD8] translate-x-[-100%] group-focus-within:translate-x-0 transition-transform duration-700 ease-out" />
                             </div>
-                        </FadeIn>
-                    </div>
-
-                    {/* Link Columns */}
-                    <div className="col-span-1">
-                        <FadeIn delay={0.2}>
-                            <h3 className="font-medium text-lg mb-6">Shop</h3>
-                            <ul className="space-y-4">
-                                {footerLinks.shop.map((link) => (
-                                    <li key={link.label}>
-                                        <Link href={link.href} className="text-white/60 hover:text-white transition-colors font-light text-sm tracking-wide">
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </FadeIn>
-                    </div>
-
-                    <div className="col-span-1">
-                        <FadeIn delay={0.3}>
-                            <h3 className="font-medium text-lg mb-6">Company</h3>
-                            <ul className="space-y-4">
-                                {footerLinks.company.map((link) => (
-                                    <li key={link.label}>
-                                        <Link href={link.href} className="text-white/60 hover:text-white transition-colors font-light text-sm tracking-wide">
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </FadeIn>
-                    </div>
-
-                    <div className="col-span-1 lg:col-span-1">
-                        <FadeIn delay={0.4}>
-                            <h3 className="font-medium text-lg mb-6">Support</h3>
-                            <ul className="space-y-4">
-                                {footerLinks.support.map((link) => (
-                                    <li key={link.label}>
-                                        <Link href={link.href} className="text-white/60 hover:text-white transition-colors font-light text-sm tracking-wide">
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </FadeIn>
+                        </motion.form>
                     </div>
                 </div>
 
-                {/* Bottom Bar */}
-                <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-light text-white/40 uppercase tracking-widest">
-                    <p>&copy; {new Date().getFullYear()} Doree. All rights reserved.</p>
-                    <div className="flex gap-6">
-                        <span>Currency: INR</span>
-                        <span>Country: India</span>
+                {/* Middle Section: Links */}
+                <div className="border-t border-white/10 pt-20 pb-20">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-12 lg:gap-8">
+                        {/* Address / Contact (Optional or Brand Info) */}
+                        <div className="col-span-2 lg:col-span-4">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.1 }}
+                            >
+                                <h3 className="text-xs font-medium uppercase tracking-[0.2em] mb-8 text-white/40">Contact</h3>
+                                <p className="text-xl font-light leading-relaxed text-[#E0D5C7]/80 mb-6">
+                                    hello@doree.com<br />
+                                    +91 98765 43210
+                                </p>
+                                <p className="text-sm font-light text-white/40">
+                                    Mumbai, India<br />
+                                    Open 9am - 6pm
+                                </p>
+                            </motion.div>
+                        </div>
+
+                        {/* Navigation Columns */}
+                        <div className="lg:col-span-2">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                            >
+                                <h3 className="text-xs font-medium uppercase tracking-[0.2em] mb-8 text-white/40">Explore</h3>
+                                <ul className="space-y-4">
+                                    {footerLinks.shop.map((link) => (
+                                        <li key={link.label}>
+                                            <Link href={link.href} className="group flex items-center gap-2 text-sm text-[#E0D5C7]/70 hover:text-[#F3EAD8] transition-colors duration-300">
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        </div>
+
+                        <div className="lg:col-span-2">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.3 }}
+                            >
+                                <h3 className="text-xs font-medium uppercase tracking-[0.2em] mb-8 text-white/40">Company</h3>
+                                <ul className="space-y-4">
+                                    {footerLinks.company.map((link) => (
+                                        <li key={link.label}>
+                                            <Link href={link.href} className="text-sm text-[#E0D5C7]/70 hover:text-[#F3EAD8] transition-colors duration-300">
+                                                {link.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        </div>
+
+                        <div className="lg:col-span-2">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.4 }}
+                            >
+                                <h3 className="text-xs font-medium uppercase tracking-[0.2em] mb-8 text-white/40">Socials</h3>
+                                <ul className="space-y-4">
+                                    {[
+                                        { label: "Instagram", icon: Instagram },
+                                        { label: "Twitter", icon: Twitter },
+                                        { label: "Facebook", icon: Facebook }
+                                    ].map((social) => (
+                                        <li key={social.label}>
+                                            <Link href="#" className="group flex items-center justify-between w-full max-w-[120px] text-sm text-[#E0D5C7]/70 hover:text-[#F3EAD8] transition-colors duration-300 border-b border-white/5 pb-1 cursor-pointer">
+                                                <span>{social.label}</span>
+                                                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Bottom Bar & Watermark */}
+                <div className="relative pt-12 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-white/10">
+                    <p className="text-xs font-medium text-white/20 tracking-wider">
+                        &copy; {new Date().getFullYear()} DOREE. ALL RIGHTS RESERVED.
+                    </p>
+
+                    <div className="flex gap-8">
+                        <Link href="/privacy" className="text-xs font-medium text-white/30 hover:text-white/60 transition-colors uppercase tracking-wider">Privacy</Link>
+                        <Link href="/terms" className="text-xs font-medium text-white/30 hover:text-white/60 transition-colors uppercase tracking-wider">Terms</Link>
+                    </div>
+
+                    {/* Giant Watermark */}
+                    <div className="absolute left-1/2 -translate-x-1/2 bottom-0 pointer-events-none select-none opacity-[0.03] overflow-hidden w-full flex justify-center">
+                        <h1 className="font-display text-[15vw] leading-none tracking-tighter text-white whitespace-nowrap">
+                            DOREE
+                        </h1>
                     </div>
                 </div>
             </Container>
