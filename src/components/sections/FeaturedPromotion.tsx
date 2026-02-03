@@ -6,8 +6,9 @@ import Link from "next/link";
 import Container from "@/components/ui/Container";
 import FadeIn from "@/components/animations/FadeIn";
 import { getProducts, Product as DBProduct } from "@/lib/supabase/products";
+import { getContent } from "@/lib/supabase/content";
 
-const FEATURED_PROMO_KEY = "featuredPromotionProducts";
+const FEATURED_PROMO_KEY = "featured_promotion_products";
 
 interface FeaturedPromoItem {
     productId: string;
@@ -69,10 +70,10 @@ const FeaturedPromotion = () => {
     useEffect(() => {
         async function loadPromoProducts() {
             try {
-                const savedPromo = localStorage.getItem(FEATURED_PROMO_KEY);
+                const savedPromo = await getContent<FeaturedPromoItem[]>(FEATURED_PROMO_KEY);
 
                 if (savedPromo) {
-                    const promoItems: FeaturedPromoItem[] = JSON.parse(savedPromo);
+                    const promoItems = savedPromo;
 
                     // Check if any products are selected
                     const hasSelectedProducts = promoItems.some(item => item.productId);

@@ -1,12 +1,10 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { Save, ImageIcon, Type, Star, Check, X, Loader2, Layout, ChevronDown, ChevronUp, TrendingUp, Sparkles, Award } from "lucide-react";
 import { getProducts, Product } from "@/lib/supabase/products";
+import { getContent, saveContent } from "@/lib/supabase/content";
 
-const THE_EDIT_KEY = "theEditProducts";
-const FEATURED_PROMO_KEY = "featuredPromotionProducts";
+const THE_EDIT_KEY = "the_edit_products";
+const FEATURED_PROMO_KEY = "featured_promotion_products";
+const HERO_CONTENT_KEY = "homepage_hero";
+const ABOUT_STORY_KEY = "about_story";
 
 interface TheEditConfig {
     trendingNow: string[];
@@ -88,24 +86,29 @@ export default function AdminContentPage() {
                 setAllProducts(products);
 
                 // Load The Edit config
-                const savedEdit = localStorage.getItem(THE_EDIT_KEY);
+                const savedEdit = await getContent<TheEditConfig>(THE_EDIT_KEY);
                 if (savedEdit) {
-                    const parsedEdit = JSON.parse(savedEdit);
                     // Validate IDs exist
                     const validated: TheEditConfig = {
-                        trendingNow: (parsedEdit.trendingNow || []).filter((id: string) => products.some(p => p.id === id)),
-                        newArrivals: (parsedEdit.newArrivals || []).filter((id: string) => products.some(p => p.id === id)),
-                        bestSellers: (parsedEdit.bestSellers || []).filter((id: string) => products.some(p => p.id === id)),
+                        trendingNow: (savedEdit.trendingNow || []).filter((id: string) => products.some(p => p.id === id)),
+                        newArrivals: (savedEdit.newArrivals || []).filter((id: string) => products.some(p => p.id === id)),
+                        bestSellers: (savedEdit.bestSellers || []).filter((id: string) => products.some(p => p.id === id)),
                     };
                     setEditConfig(validated);
                 }
 
                 // Load Featured Promotion
-                const savedPromo = localStorage.getItem(FEATURED_PROMO_KEY);
+                const savedPromo = await getContent<FeaturedPromoItem[]>(FEATURED_PROMO_KEY);
                 if (savedPromo) {
-                    const parsedPromo = JSON.parse(savedPromo);
-                    setPromoItems(parsedPromo);
+                    setPromoItems(savedPromo);
                 }
+
+                // Load Hero Content
+                const savedHero = await getContent<any>(HERO_CONTENT_KEY);
+                /* Note: We would need to update contentBlocks state here, but for simplicity
+                   and to avoid massive state refactoring, we'll implement Hero editing properly 
+                   when we touch the Hero component migration. For now ensuring these keys align. */
+
             } catch (error) {
                 console.error("Error loading products:", error);
             } finally {
@@ -131,10 +134,10 @@ export default function AdminContentPage() {
         });
     };
 
-    const saveEditConfig = () => {
+    const saveEditConfig = async () => {
         setSavingEdit(true);
         try {
-            localStorage.setItem(THE_EDIT_KEY, JSON.stringify(editConfig));
+            await saveContent(THE_EDIT_KEY, editConfig);
             setTimeout(() => {
                 setSavingEdit(false);
                 alert("The Edit products saved! Refresh the homepage to see changes.");
@@ -153,10 +156,10 @@ export default function AdminContentPage() {
         });
     };
 
-    const savePromoItems = () => {
+    const savePromoItems = async () => {
         setSavingPromo(true);
         try {
-            localStorage.setItem(FEATURED_PROMO_KEY, JSON.stringify(promoItems));
+            await saveContent(FEATURED_PROMO_KEY, promoItems);
             setTimeout(() => {
                 setSavingPromo(false);
                 alert("Featured Promotion saved! Refresh the homepage to see changes.");
@@ -212,8 +215,8 @@ export default function AdminContentPage() {
                                 key={tab.key}
                                 onClick={() => setActiveEditTab(tab.key)}
                                 className={`flex-1 px-4 py-3 flex items-center justify-center gap-2 text-sm font-medium transition-colors ${isActive
-                                        ? `bg-gradient-to-r ${tab.bgColor} ${tab.color} border-b-2 border-current`
-                                        : "text-neutral-500 hover:bg-neutral-50"
+                                    ? `bg-gradient-to-r ${tab.bgColor} ${tab.color} border-b-2 border-current`
+                                    : "text-neutral-500 hover:bg-neutral-50"
                                     }`}
                             >
                                 <Icon className="w-4 h-4" />
@@ -250,7 +253,7 @@ export default function AdminContentPage() {
                                                     <X className="w-3 h-3" />
                                                 </button>
                                                 <div className={`absolute top-2 left-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white ${activeEditTab === "trendingNow" ? "bg-red-500" :
-                                                        activeEditTab === "newArrivals" ? "bg-blue-500" : "bg-amber-500"
+                                                    activeEditTab === "newArrivals" ? "bg-blue-500" : "bg-amber-500"
                                                     }`}>
                                                     {index + 1}
                                                 </div>
@@ -303,10 +306,10 @@ export default function AdminContentPage() {
                                             onClick={() => canSelect && toggleEditProduct(product.id)}
                                             disabled={!canSelect}
                                             className={`relative rounded-lg border-2 overflow-hidden transition-all ${isSelected
-                                                    ? `border-current ring-2 ${currentTabConfig.color}`
-                                                    : canSelect
-                                                        ? "border-neutral-200 hover:border-neutral-400"
-                                                        : "border-neutral-100 opacity-50 cursor-not-allowed"
+                                                ? `border-current ring-2 ${currentTabConfig.color}`
+                                                : canSelect
+                                                    ? "border-neutral-200 hover:border-neutral-400"
+                                                    : "border-neutral-100 opacity-50 cursor-not-allowed"
                                                 }`}
                                         >
                                             <div className="aspect-[3/4] relative">
@@ -314,7 +317,7 @@ export default function AdminContentPage() {
                                                 {isSelected && (
                                                     <div className={`absolute inset-0 bg-current/20 flex items-center justify-center ${currentTabConfig.color}`}>
                                                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${activeEditTab === "trendingNow" ? "bg-red-500" :
-                                                                activeEditTab === "newArrivals" ? "bg-blue-500" : "bg-amber-500"
+                                                            activeEditTab === "newArrivals" ? "bg-blue-500" : "bg-amber-500"
                                                             }`}>
                                                             <Check className="w-4 h-4 text-white" />
                                                         </div>
