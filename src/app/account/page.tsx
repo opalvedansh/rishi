@@ -331,7 +331,7 @@ export default function AccountPage() {
                             {/* Customer Care Card */}
                             <div className="mt-6 bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-2xl p-6 text-white relative overflow-hidden">
                                 <div className="relative z-10">
-                                    <h4 className="font-display font-bold text-lg mb-1">Customer Support</h4>
+                                    <h4 className="font-display font-bold text-lg mb-1 text-amber-400">Customer Support</h4>
                                     <p className="text-white/60 text-xs mb-4 leading-relaxed">
                                         {CUSTOMER_CARE.hours}
                                     </p>
