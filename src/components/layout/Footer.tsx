@@ -33,7 +33,7 @@ const Footer = () => {
         <footer className="relative bg-[#050505] text-[#E0D5C7] pt-32 pb-12 overflow-hidden">
             {/* Ambient Background Gradient */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#3d2817]/10 blur-[150px] rounded-full mix-blend-screen" />
+                <div className="absolute -top-[20%] left-[20%] w-[60%] h-[60%] bg-[#C5A065]/5 blur-[150px] rounded-full mix-blend-screen" />
             </div>
 
             <Container className="relative z-10">
@@ -48,7 +48,7 @@ const Footer = () => {
                                 transition={{ duration: 0.8 }}
                                 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight mb-8 text-[#F3EAD8]"
                             >
-                                Join the <br /> <span className="italic text-white/40">movement.</span>
+                                Join the <br /> <span className="italic text-[#C5A065]">movement.</span>
                             </motion.h2>
                             <motion.p
                                 initial={{ opacity: 0, y: 20 }}
@@ -74,15 +74,15 @@ const Footer = () => {
                                 <input
                                     type="email"
                                     placeholder="Email Address"
-                                    className="w-full bg-transparent border-b border-white/20 py-6 text-xl md:text-2xl outline-none text-[#F3EAD8] placeholder:text-white/20 focus:border-[#F3EAD8] transition-all duration-500 pr-12"
+                                    className="w-full bg-transparent border-b border-white/20 py-6 text-xl md:text-2xl outline-none text-[#F3EAD8] placeholder:text-white/20 focus:border-[#C5A065] transition-all duration-500 pr-12"
                                 />
                                 <button
                                     type="submit"
-                                    className="absolute right-0 top-1/2 -translate-y-1/2 text-white/40 group-hover:text-[#F3EAD8] transition-colors duration-300"
+                                    className="absolute right-0 top-1/2 -translate-y-1/2 text-white/40 group-hover:text-[#C5A065] transition-colors duration-300"
                                 >
                                     <ArrowRight className="w-8 h-8" />
                                 </button>
-                                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#F3EAD8] translate-x-[-100%] group-focus-within:translate-x-0 transition-transform duration-700 ease-out" />
+                                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A065] translate-x-[-100%] group-focus-within:translate-x-0 transition-transform duration-700 ease-out" />
                             </div>
                         </motion.form>
                     </div>
@@ -123,7 +123,7 @@ const Footer = () => {
                                 <ul className="space-y-4">
                                     {footerLinks.shop.map((link) => (
                                         <li key={link.label}>
-                                            <Link href={link.href} className="group flex items-center gap-2 text-sm text-[#E0D5C7]/70 hover:text-[#F3EAD8] transition-colors duration-300">
+                                            <Link href={link.href} className="group flex items-center gap-2 text-sm text-[#E0D5C7]/70 hover:text-[#C5A065] transition-colors duration-300">
                                                 {link.label}
                                             </Link>
                                         </li>
@@ -143,7 +143,7 @@ const Footer = () => {
                                 <ul className="space-y-4">
                                     {footerLinks.company.map((link) => (
                                         <li key={link.label}>
-                                            <Link href={link.href} className="text-sm text-[#E0D5C7]/70 hover:text-[#F3EAD8] transition-colors duration-300">
+                                            <Link href={link.href} className="text-sm text-[#E0D5C7]/70 hover:text-[#C5A065] transition-colors duration-300">
                                                 {link.label}
                                             </Link>
                                         </li>
@@ -167,9 +167,9 @@ const Footer = () => {
                                         { label: "Facebook", icon: Facebook }
                                     ].map((social) => (
                                         <li key={social.label}>
-                                            <Link href="#" className="group flex items-center justify-between w-full max-w-[120px] text-sm text-[#E0D5C7]/70 hover:text-[#F3EAD8] transition-colors duration-300 border-b border-white/5 pb-1 cursor-pointer">
+                                            <Link href="#" className="group flex items-center justify-between w-full max-w-[120px] text-sm text-[#E0D5C7]/70 hover:text-[#C5A065] transition-colors duration-300 border-b border-white/5 pb-1 cursor-pointer">
                                                 <span>{social.label}</span>
-                                                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
+                                                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-[#C5A065]" />
                                             </Link>
                                         </li>
                                     ))}
