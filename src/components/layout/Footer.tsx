@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Twitter, ArrowRight, ArrowUpRight, Sparkles } from "lucide-react";
 import Container from "@/components/ui/Container";
 import { motion } from "framer-motion";
@@ -132,9 +133,13 @@ const Footer = () => {
                         className="col-span-2 md:col-span-4 lg:col-span-4"
                     >
                         <Link href="/" className="inline-block mb-6">
-                            <span className="font-display text-3xl md:text-4xl tracking-tight text-[#F3EAD8] hover:text-[#D4A574] transition-colors duration-300">
-                                Doree
-                            </span>
+                            <Image
+                                src="/doree-logo.png"
+                                alt="Doree"
+                                width={140}
+                                height={60}
+                                className="h-12 md:h-14 w-auto object-contain"
+                            />
                         </Link>
                         <p className="text-sm font-light text-[#E8DFD0]/50 leading-relaxed mb-8 max-w-xs">
                             Redefining modern luxury with timeless essentials and exceptional craftsmanship.
