@@ -20,7 +20,7 @@ const Hero = ({
     text = "Discover the craftsmanship that defines modern luxury.",
     videoUrl = "https://www.youtube.com/embed/_9VUPq3SxOc?autoplay=1&mute=1&controls=0&loop=1&playlist=_9VUPq3SxOc",
     buttonLabel = "Explore Collection",
-    buttonLink = "/collections/all",
+    buttonLink = "/products",
 }: HeroProps) => {
     const ref = useRef(null);
     const { scrollYProgress } = useScroll({

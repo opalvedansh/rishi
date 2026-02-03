@@ -8,8 +8,8 @@ import { motion } from "framer-motion";
 
 const footerLinks = {
     shop: [
-        { label: "New Arrivals", href: "/collections/new-arrivals" },
-        { label: "Best Sellers", href: "/collections/best-sellers" },
+        { label: "New Arrivals", href: "/products" },
+        { label: "Best Sellers", href: "/products" },
     ],
     company: [
         { label: "Our Story", href: "/about" },
