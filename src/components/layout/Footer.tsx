@@ -136,9 +136,9 @@ const Footer = () => {
                             <Image
                                 src="/doree-logo.png"
                                 alt="Doree"
-                                width={140}
-                                height={60}
-                                className="h-12 md:h-14 w-auto object-contain"
+                                width={180}
+                                height={80}
+                                className="h-16 md:h-20 w-auto object-contain"
                             />
                         </Link>
                         <p className="text-sm font-light text-[#E8DFD0]/50 leading-relaxed mb-8 max-w-xs">
