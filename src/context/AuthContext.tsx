@@ -8,12 +8,14 @@ interface AuthContextType {
     user: User | null;
     isLoading: boolean;
     signOut: () => Promise<void>;
+    updateProfile: (data: { firstName?: string; lastName?: string }) => Promise<{ success: boolean; error?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
     isLoading: true,
     signOut: async () => { },
+    updateProfile: async () => ({ success: false }),
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -61,8 +63,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         window.location.href = "/"; // Force hard refresh/redirect to clear any server state
     };
 
+    const updateProfile = async (data: { firstName?: string; lastName?: string }) => {
+        try {
+            const { data: updatedUser, error } = await supabase.auth.updateUser({
+                data: {
+                    first_name: data.firstName,
+                    last_name: data.lastName,
+                },
+            });
+
+            if (error) {
+                return { success: false, error: error.message };
+            }
+
+            if (updatedUser.user) {
+                setUser(updatedUser.user);
+            }
+
+            return { success: true };
+        } catch {
+            return { success: false, error: 'An unexpected error occurred' };
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, isLoading, signOut }}>
+        <AuthContext.Provider value={{ user, isLoading, signOut, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );

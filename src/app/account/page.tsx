@@ -32,6 +32,105 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { getOrdersByUser, Order, DELIVERY_STEPS, getDeliveryStepIndex, CUSTOMER_CARE, DeliveryStatus } from "@/lib/supabase/orders";
 
+// Settings Form Component
+function SettingsForm() {
+    const { user, updateProfile } = useAuth();
+    const [firstName, setFirstName] = useState(user?.user_metadata?.first_name || '');
+    const [lastName, setLastName] = useState(user?.user_metadata?.last_name || '');
+    const [isSaving, setIsSaving] = useState(false);
+    const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSaving(true);
+        setSaveStatus('idle');
+        setErrorMessage('');
+
+        const result = await updateProfile({ firstName, lastName });
+
+        if (result.success) {
+            setSaveStatus('success');
+            setTimeout(() => setSaveStatus('idle'), 3000);
+        } else {
+            setSaveStatus('error');
+            setErrorMessage(result.error || 'Failed to save changes');
+        }
+
+        setIsSaving(false);
+    };
+
+    return (
+        <div className="space-y-6">
+            <div>
+                <h1 className="font-display text-3xl font-bold mb-2">Settings</h1>
+                <p className="text-neutral-500">Manage your profile and account preferences.</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-neutral-200/60 shadow-sm p-8">
+                <div className="max-w-xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">First Name</label>
+                            <input
+                                type="text"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors"
+                                placeholder="Enter your first name"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">Last Name</label>
+                            <input
+                                type="text"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors"
+                                placeholder="Enter your last name"
+                            />
+                        </div>
+                    </div>
+                    <div className="mb-8">
+                        <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">Email Address</label>
+                        <input
+                            type="email"
+                            disabled
+                            value={user?.email || ''}
+                            className="w-full bg-neutral-100 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-neutral-500 cursor-not-allowed"
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <button
+                            type="submit"
+                            disabled={isSaving}
+                            className="px-8 py-3 bg-black text-white text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-800 hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                        >
+                            {isSaving && <Loader2 className="w-4 h-4 animate-spin" />}
+                            {isSaving ? 'Saving...' : 'Save Changes'}
+                        </button>
+
+                        {saveStatus === 'success' && (
+                            <span className="flex items-center gap-2 text-green-600 text-sm font-medium">
+                                <CheckCircle className="w-4 h-4" />
+                                Changes saved successfully!
+                            </span>
+                        )}
+
+                        {saveStatus === 'error' && (
+                            <span className="flex items-center gap-2 text-red-600 text-sm font-medium">
+                                <XCircle className="w-4 h-4" />
+                                {errorMessage}
+                            </span>
+                        )}
+                    </div>
+                </div>
+            </form>
+        </div>
+    );
+}
+
 export default function AccountPage() {
     const { user, isLoading, signOut } = useAuth();
     const { wishlist } = useShop();
@@ -579,48 +678,7 @@ export default function AccountPage() {
                                     )}
 
                                     {activeTab === "settings" && (
-                                        <div className="space-y-6">
-                                            <div>
-                                                <h1 className="font-display text-3xl font-bold mb-2">Settings</h1>
-                                                <p className="text-neutral-500">Manage your profile and account preferences.</p>
-                                            </div>
-
-                                            <div className="bg-white rounded-2xl border border-neutral-200/60 shadow-sm p-8">
-                                                <div className="max-w-xl">
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                                        <div>
-                                                            <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">First Name</label>
-                                                            <input
-                                                                type="text"
-                                                                defaultValue={user.user_metadata?.first_name}
-                                                                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors"
-                                                            />
-                                                        </div>
-                                                        <div>
-                                                            <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">Last Name</label>
-                                                            <input
-                                                                type="text"
-                                                                defaultValue={user.user_metadata?.last_name}
-                                                                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-colors"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                    <div className="mb-8">
-                                                        <label className="block text-xs font-bold uppercase tracking-widest text-neutral-500 mb-2">Email Address</label>
-                                                        <input
-                                                            type="email"
-                                                            disabled
-                                                            defaultValue={user.email}
-                                                            className="w-full bg-neutral-100 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-neutral-500 cursor-not-allowed"
-                                                        />
-                                                    </div>
-
-                                                    <button className="px-8 py-3 bg-black text-white text-sm font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-800 hover:shadow-lg transition-all duration-300">
-                                                        Save Changes
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <SettingsForm />
                                     )}
                                 </motion.div>
                             </AnimatePresence>
