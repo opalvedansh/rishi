@@ -10,14 +10,9 @@ const footerLinks = {
     shop: [
         { label: "New Arrivals", href: "/collections/new-arrivals" },
         { label: "Best Sellers", href: "/collections/best-sellers" },
-        { label: "Trousers", href: "/collections/trousers" },
-        { label: "Knitwear", href: "/collections/knitwear" },
-        { label: "Accessories", href: "/collections/accessories" },
     ],
     company: [
         { label: "Our Story", href: "/about" },
-        { label: "Sustainability", href: "#" },
-        { label: "Careers", href: "#" },
         { label: "Terms of Service", href: "/terms" },
         { label: "Privacy Policy", href: "/privacy" },
     ],
