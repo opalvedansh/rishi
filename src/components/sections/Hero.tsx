@@ -45,7 +45,7 @@ const Hero = ({
                 <iframe
                     src={videoUrl}
                     className="w-full h-full object-cover scale-[1.7] md:scale-150 pointer-events-none"
-                    allow="autoplay; encrypted-media; loop"
+                    allow="autoplay; encrypted-media"
                     allowFullScreen
                     title="Hero Video"
                 />
