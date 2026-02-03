@@ -57,7 +57,7 @@ const Header = () => {
 
                     {/* CENTER SECTION (w-1/3) - Logo */}
                     <div className="w-1/3 flex justify-center">
-                        <Link href="/" className="relative h-14 w-auto aspect-[3/1]">
+                        <Link href="/" className="relative h-16 w-auto aspect-[3/1]">
                             <Image
                                 src="/doree-logo-nav.png"
                                 alt="Doree"
