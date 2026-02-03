@@ -73,12 +73,7 @@ const ProductCard = ({ product, className, index = 0 }: ProductCardProps) => {
                     </div>
                 )}
 
-                {/* Discount Badge */}
-                {inStock && product.originalPrice && product.originalPrice > product.price && (
-                    <span className="absolute top-2 right-2 left-auto z-10 bg-red-500 text-white text-[10px] uppercase font-bold px-2 py-1 tracking-wider shadow-sm rounded-sm">
-                        -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                    </span>
-                )}
+
 
                 {/* Wishlist Button */}
                 <button
