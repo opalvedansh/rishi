@@ -1,3 +1,8 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Save, ImageIcon, Type, Star, Check, X, Loader2, Layout, ChevronDown, ChevronUp, TrendingUp, Sparkles, Award } from "lucide-react";
 import { getProducts, Product } from "@/lib/supabase/products";
 import { getContent, saveContent } from "@/lib/supabase/content";
 
