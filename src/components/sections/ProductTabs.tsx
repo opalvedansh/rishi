@@ -8,8 +8,9 @@ import { Product } from "@/data/products";
 import FadeIn from "@/components/animations/FadeIn";
 import { cn } from "@/lib/utils";
 import { getProducts, Product as DBProduct } from "@/lib/supabase/products";
+import { getContent } from "@/lib/supabase/content";
 
-const THE_EDIT_KEY = "theEditProducts";
+const THE_EDIT_KEY = "the_edit_products";
 
 interface TheEditConfig {
     trendingNow: string[];
@@ -93,10 +94,10 @@ const ProductTabs = () => {
     useEffect(() => {
         async function loadProducts() {
             try {
-                const savedConfig = localStorage.getItem(THE_EDIT_KEY);
+                const savedConfig = await getContent<TheEditConfig>(THE_EDIT_KEY);
 
                 if (savedConfig) {
-                    const config: TheEditConfig = JSON.parse(savedConfig);
+                    const config = savedConfig;
 
                     // Check if any tab has products configured
                     const hasConfig = config.trendingNow.length > 0 ||
