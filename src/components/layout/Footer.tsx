@@ -250,13 +250,6 @@ const Footer = () => {
                             </span>
                         </div>
                     </div>
-
-                    {/* Large Brand Watermark */}
-                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-4 md:-bottom-8 pointer-events-none select-none overflow-hidden w-full flex justify-center">
-                        <h1 className="font-display text-[20vw] md:text-[15vw] leading-none tracking-tighter text-[#E8DFD0]/[0.02] whitespace-nowrap">
-                            DOREE
-                        </h1>
-                    </div>
                 </div>
             </Container>
         </footer>
