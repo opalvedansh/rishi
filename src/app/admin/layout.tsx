@@ -59,7 +59,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Coupons', href: '/admin/coupons', icon: Tag },
         { name: 'Reviews', href: '/admin/reviews', icon: MessageSquare },
         { name: 'Blogs', href: '/admin/blogs', icon: BookOpen },
-        { name: 'Customers', href: '/admin/customers', icon: Users },
         { name: 'Content (CMS)', href: '/admin/content', icon: FileText },
         { name: 'Settings', href: '/admin/settings', icon: Settings },
     ];
