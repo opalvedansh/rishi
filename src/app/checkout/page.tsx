@@ -157,6 +157,17 @@ export default function CheckoutPage() {
                         await incrementCouponUsage(appliedCoupon.code);
                     }
 
+                    // Send Confirmation Email
+                    try {
+                        await fetch('/api/orders/confirm', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ orderId: dbOrder.id }),
+                        });
+                    } catch (emailErr) {
+                        console.error("Failed to trigger email:", emailErr);
+                    }
+
                     // Clear cart and redirect
                     clearCart();
                     router.push(`/checkout/success?order_id=${dbOrder.id}`);

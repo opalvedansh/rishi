@@ -28,7 +28,7 @@ CREATE POLICY "Authenticated users can update settings" ON store_settings
 -- Only authenticated users (admins) can insert (only needed once)
 CREATE POLICY "Authenticated users can insert settings" ON store_settings
   FOR INSERT
-  USING (auth.role() = 'authenticated');
+  WITH CHECK (auth.role() = 'authenticated');
 
 -- Ensure only one row exists (Singleton pattern)
 CREATE UNIQUE INDEX IF NOT EXISTS one_row_only ON store_settings((true));
