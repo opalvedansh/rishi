@@ -52,6 +52,8 @@ export interface Order {
         image: string;
         selectedSize: string;
     }[];
+    coupon_code?: string;
+    discount_amount?: number;
     created_at: string;
     updated_at: string;
 }
@@ -110,6 +112,8 @@ export async function createOrder(data: CreateOrderData): Promise<Order | null> 
             tracking_updates: initialTracking,
             shipping_address: data.shipping_address,
             items: data.items,
+            coupon_code: data.coupon_code,
+            discount_amount: data.discount_amount || 0,
         })
         .select()
         .single();

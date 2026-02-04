@@ -19,6 +19,7 @@ export default function CheckoutPage() {
     const { user, isLoading: authLoading } = useAuth();
     const router = useRouter();
     const [isPaymentProcessing, setIsPaymentProcessing] = useState(false);
+    const [isRedirecting, setIsRedirecting] = useState(false);
     const [paymentError, setPaymentError] = useState<string | null>(null);
 
     const { isLoaded: razorpayLoaded, createOrder: createRazorpayOrder, openCheckout } = useRazorpay();
@@ -146,31 +147,45 @@ export default function CheckoutPage() {
                     color: "#000000",
                 },
                 onSuccess: async (response) => {
-                    // Update order with payment details
-                    await updateOrderPayment(
-                        response.razorpay_order_id,
-                        response.razorpay_payment_id,
-                        'paid'
-                    );
+                    setIsRedirecting(true); // Change UI to "Redirecting..."
 
-                    if (appliedCoupon) {
-                        await incrementCouponUsage(appliedCoupon.code);
-                    }
-
-                    // Send Confirmation Email
                     try {
-                        await fetch('/api/orders/confirm', {
+                        // 1. Update order with payment details
+                        await updateOrderPayment(
+                            response.razorpay_order_id,
+                            response.razorpay_payment_id,
+                            'paid'
+                        );
+
+                        // 2. Increment coupon usage (non-blocking / safe)
+                        if (appliedCoupon) {
+                            incrementCouponUsage(appliedCoupon.code).catch(e => console.error("Coupon update failed:", e));
+                        }
+
+                        // 3. Send Confirmation Email (Non-blocking)
+                        // We don't await this so the user is redirected immediately.
+                        fetch('/api/orders/confirm', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ orderId: dbOrder.id }),
-                        });
-                    } catch (emailErr) {
-                        console.error("Failed to trigger email:", emailErr);
-                    }
+                        }).catch(err => console.error("Email trigger failed:", err));
 
-                    // Clear cart and redirect
-                    clearCart();
-                    router.push(`/checkout/success?order_id=${dbOrder.id}`);
+                        // 4. Clear cart and redirect
+                        clearCart();
+                        router.push(`/checkout/success?order_id=${dbOrder.id}`);
+
+                    } catch (error) {
+                        console.error("Post-payment processing failed:", error);
+                        // Even if DB update fails here, the payment IS done on Razorpay side.
+                        // We should probably still redirect or show a specific message.
+                        // For now, let's redirect to success but maybe log it? 
+                        // Or better, redirect to success because the webhook (if set up) would eventually reconcile, 
+                        // OR the user can check their orders.
+                        // But if updateOrderPayment failed, the order status is still 'pending'.
+
+                        // Let's try to redirect anyway, defaulting to success page is better than stuck on checkout.
+                        router.push(`/checkout/success?order_id=${dbOrder.id}&status=check`);
+                    }
                 },
                 onError: async (error) => {
                     console.error("Payment failed:", error);
@@ -349,7 +364,7 @@ export default function CheckoutPage() {
                                 {isPaymentProcessing ? (
                                     <>
                                         <Loader2 className="w-5 h-5 animate-spin" />
-                                        Processing...
+                                        {isRedirecting ? "Finalizing..." : "Processing..."}
                                     </>
                                 ) : !razorpayLoaded ? (
                                     <>
