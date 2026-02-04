@@ -19,8 +19,11 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Doree - Fashion Store",
+  title: "Doree - It has a reason to buy",
   description: "Doree - Open Doors To A World Of Fashion",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
