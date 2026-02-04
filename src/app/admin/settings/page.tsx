@@ -20,7 +20,7 @@ export default function AdminSettingsPage() {
         storeName: "Doree",
         storeEmail: "Doreebysvd@gmail.com",
         storePhone: "+91 98765 43210",
-        storeAddress: "123 Fashion Street, Mumbai, Maharashtra 400001",
+        storeAddress: "Flat no 130, Surya Vihar Part 2, Sector 91, Faridabad, Haryana - 121003",
         currency: "INR",
         timezone: "Asia/Kolkata",
     });

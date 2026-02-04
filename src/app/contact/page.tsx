@@ -27,9 +27,9 @@ export default function ContactPage() {
                                     <div className="flex items-start gap-4 text-neutral-500 font-light">
                                         <MapPin className="w-6 h-6 shrink-0 mt-1 text-black" />
                                         <p className="leading-relaxed">
-                                            123 Fashion Avenue,<br />
-                                            Design District,<br />
-                                            New York, NY 10012
+                                            Flat no 130, Surya Vihar Part 2,<br />
+                                            Sector 91, Faridabad,<br />
+                                            Haryana - 121003
                                         </p>
                                     </div>
                                 </div>
