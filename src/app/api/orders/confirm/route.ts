@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import OrderConfirmationEmail from "@/components/emails/OrderConfirmation";
+import AdminNewOrderEmail from "@/components/emails/AdminNewOrder";
 import { createClient } from "@/utils/supabase/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -34,34 +35,69 @@ export async function POST(request: NextRequest) {
         const shipping = 0; // Or fetch from order if stored
         const total = order.amount;
 
-        // Send Email
-        const { data, error: emailError } = await resend.emails.send({
-            from: "Doree <orders@doree.in>", // Use a verified domain if available, else 'onboarding@resend.dev' for testing
-            to: [order.shipping_address.email],
-            subject: `Order Confirmation #${orderId.slice(0, 8)}`,
-            react: OrderConfirmationEmail({
-                orderId: order.id,
-                customerName: `${order.shipping_address.firstName} ${order.shipping_address.lastName}`,
-                items: order.items,
-                subtotal,
-                discount,
-                shipping,
-                total,
-                shippingAddress: {
-                    address: order.shipping_address.address,
-                    city: order.shipping_address.city,
-                    state: order.shipping_address.state,
-                    zip: order.shipping_address.zip,
-                },
-            }),
-        });
+        // Fetch Store Settings
+        const { data: settings } = await supabase
+            .from('store_settings')
+            .select('*')
+            .single();
 
-        if (emailError) {
-            console.error("Error sending email via Resend:", emailError);
-            return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
+        // 1. Send Customer Confirmation Email
+        try {
+            await resend.emails.send({
+                from: "Doree <orders@doree.in>",
+                to: [order.shipping_address.email],
+                subject: `Order Confirmation #${orderId.slice(0, 8)}`,
+                react: OrderConfirmationEmail({
+                    orderId: order.id,
+                    customerName: `${order.shipping_address.firstName} ${order.shipping_address.lastName}`,
+                    items: order.items,
+                    subtotal,
+                    discount,
+                    shipping,
+                    total,
+                    shippingAddress: {
+                        address: order.shipping_address.address,
+                        city: order.shipping_address.city,
+                        state: order.shipping_address.state,
+                        zip: order.shipping_address.zip,
+                    },
+                }),
+            });
+        } catch (error) {
+            console.error("Failed to send customer email:", error);
+            // Don't error out, keep trying to send admin email
         }
 
-        return NextResponse.json({ success: true, data });
+        // 2. Send Admin Notification (if enabled)
+        if (settings?.notifications?.orderConfirmation && settings?.general?.storeEmail) {
+            try {
+                await resend.emails.send({
+                    from: "Doree Admin <orders@doree.in>",
+                    to: [settings.general.storeEmail],
+                    subject: `New Order! #${orderId.slice(0, 8)} - ₹${total}`,
+                    react: AdminNewOrderEmail({
+                        orderId: order.id,
+                        customerName: `${order.shipping_address.firstName} ${order.shipping_address.lastName}`,
+                        customerEmail: order.shipping_address.email,
+                        items: order.items,
+                        subtotal,
+                        discount,
+                        shipping,
+                        total,
+                        shippingAddress: {
+                            address: order.shipping_address.address,
+                            city: order.shipping_address.city,
+                            state: order.shipping_address.state,
+                            zip: order.shipping_address.zip,
+                        },
+                    }),
+                });
+            } catch (error) {
+                console.error("Failed to send admin notification:", error);
+            }
+        }
+
+        return NextResponse.json({ success: true });
 
     } catch (error) {
         console.error("API Error:", error);
