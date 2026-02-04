@@ -13,7 +13,7 @@ const AnnouncementBar = () => {
         <div className="bg-[var(--color-announcement-bg)] text-white relative transition-all duration-300">
             <div className="container mx-auto px-4 py-2.5 text-center text-sm font-medium tracking-wide">
                 <p>
-                    🔥 Flash Sale! Flat 30% OFF on Winter Wear.{" "}
+                    ❄️ Winter Sale! Get a Discount of Flat 10% OFF on using WINTER10.{" "}
                     <span className="underline cursor-pointer hover:opacity-80">
                         Shop Now!
                     </span>
