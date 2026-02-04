@@ -1,34 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Store, Mail, Phone, MapPin, Globe, CreditCard, Truck, Bell,
-    Moon, Sun, Shield, Key, Save, Loader2, Check, Upload, Trash2,
-    Palette, Eye, EyeOff, AlertCircle, Instagram, Facebook, MessageCircle, Package
+    Check, Upload, Trash2, Palette, Eye, EyeOff, AlertCircle,
+    Instagram, Facebook, MessageCircle, Package, Save, Loader2, Key, Shield
 } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { getSettings, updateSettings } from "@/lib/supabase/settings";
 
 export default function AdminSettingsPage() {
     const [activeTab, setActiveTab] = useState("general");
     const [isSaving, setIsSaving] = useState(false);
     const [saved, setSaved] = useState(false);
     const [showApiKey, setShowApiKey] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Form states
     const [storeSettings, setStoreSettings] = useState({
-        storeName: "Doree",
-        storeEmail: "Doreebysvd@gmail.com",
-        storePhone: "+91 98765 43210",
-        storeAddress: "Flat no 130, Surya Vihar Part 2, Sector 91, Faridabad, Haryana - 121003",
+        storeName: "",
+        storeEmail: "",
+        storePhone: "",
+        storeAddress: "",
         currency: "INR",
         timezone: "Asia/Kolkata",
     });
 
     const [shippingSettings, setShippingSettings] = useState({
-        freeShippingThreshold: "999",
-        standardShippingRate: "99",
-        expressShippingRate: "199",
+        freeShippingThreshold: "",
+        standardShippingRate: "",
+        expressShippingRate: "",
         processingDays: "1-2",
         deliveryDays: "3-5",
     });
@@ -43,25 +45,57 @@ export default function AdminSettingsPage() {
     });
 
     const [socialSettings, setSocialSettings] = useState({
-        instagram: "https://instagram.com/doree",
-        facebook: "https://facebook.com/doree",
-        whatsapp: "+919876543210",
+        instagram: "",
+        facebook: "",
+        whatsapp: "",
     });
 
     const [paymentSettings, setPaymentSettings] = useState({
-        razorpayKeyId: "rzp_test_xxxxx",
-        razorpayKeySecret: "••••••••••••••••",
+        razorpayKeyId: "",
+        razorpayKeySecret: "",
         codEnabled: true,
         upiEnabled: true,
     });
 
+    useEffect(() => {
+        fetchSettings();
+    }, []);
+
+    async function fetchSettings() {
+        try {
+            const data = await getSettings();
+            if (data) {
+                setStoreSettings(data.general);
+                setShippingSettings(data.shipping);
+                setNotificationSettings(data.notifications);
+                setSocialSettings(data.social);
+                setPaymentSettings(data.payment);
+            }
+        } catch (error) {
+            console.error("Error fetching settings:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     const handleSave = async () => {
         setIsSaving(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setIsSaving(false);
-        setSaved(true);
-        setTimeout(() => setSaved(false), 3000);
+        try {
+            await updateSettings({
+                general: storeSettings,
+                shipping: shippingSettings,
+                notifications: notificationSettings,
+                social: socialSettings,
+                payment: paymentSettings,
+            });
+            setSaved(true);
+            setTimeout(() => setSaved(false), 3000);
+        } catch (error) {
+            console.error("Error saving settings:", error);
+            alert("Failed to save settings");
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const tabs = [
@@ -71,6 +105,14 @@ export default function AdminSettingsPage() {
         { id: "notifications", name: "Notifications", icon: Bell },
         { id: "social", name: "Social Media", icon: Globe },
     ];
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center h-96">
+                <Loader2 className="w-8 h-8 animate-spin text-neutral-300" />
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-6xl mx-auto pb-20">
