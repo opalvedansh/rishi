@@ -638,7 +638,7 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
                                         <Package className="w-5 h-5 text-[#C9A86C] mt-0.5" />
                                         <div>
                                             <p className="text-sm font-medium text-neutral-900">Free Delivery</p>
-                                            <p className="text-xs text-neutral-500">Enter your postal code for delivery availability</p>
+                                            <p className="text-xs text-neutral-500">Free delivery on the purchase of ₹3000 or above</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
