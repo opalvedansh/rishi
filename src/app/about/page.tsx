@@ -44,65 +44,84 @@ export default function AboutPage() {
 
     return (
         <div className="bg-white">
-            {/* Spectacular Hero Section */}
-            <section ref={ref} className="relative h-[90vh] min-h-[600px] overflow-hidden flex items-center justify-center text-white">
+            {/* Spectacular Hero Section - High Fashion Editorial */}
+            <section ref={ref} className="relative h-screen min-h-[700px] overflow-hidden bg-[#0a0a0a] text-white">
                 {/* Parallax Background */}
                 <motion.div style={{ y }} className="absolute inset-0 z-0">
                     <Image
                         src="/assets/IMG_2172.PNG"
                         alt="About Us Hero"
                         fill
-                        className="object-cover scale-105"
+                        className="object-cover scale-105 opacity-90"
                         priority
                     />
-                    {/* Cinematic Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/80" />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,black_100%)] opacity-60" />
+                    {/* Subtle Overlay to ensure text readability without killing the vibe */}
+                    <div className="absolute inset-0 bg-[#3d2817]/20 mix-blend-multiply" />
                     {/* Grain Texture */}
-                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
+                    <div className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")' }} />
                 </motion.div>
 
-                <Container className="relative z-10 text-center">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                {/* Massive Dimensional Typography */}
+                <div className="absolute inset-0 z-10 pointer-events-none mix-blend-overlay">
+                    <motion.h1
+                        initial={{ x: -100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute top-[8%] left-[4%] font-display text-[18vw] leading-none tracking-tighter text-white select-none"
                     >
-                        <span className="inline-block py-1 px-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-xs font-medium tracking-[0.2em] uppercase text-[#D4A574] mb-6">
-                            Est. 2024
-                        </span>
-                        <h1 className="font-display text-6xl md:text-8xl lg:text-9xl mb-6 tracking-tight">
-                            <span className="block text-[#F3EAD8] drop-shadow-2xl">Our</span>
-                            <span className="block bg-gradient-to-r from-[#D4A574] via-[#E8C4A0] to-[#D4A574] bg-clip-text text-transparent italic drop-shadow-lg pb-4">
-                                Story
-                            </span>
-                        </h1>
-                    </motion.div>
+                        OUR
+                    </motion.h1>
+                    <motion.h1
+                        initial={{ x: 100, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 1.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute bottom-[8%] right-[4%] font-display text-[18vw] leading-none tracking-tighter text-white select-none"
+                    >
+                        STORY
+                    </motion.h1>
+                </div>
 
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.8 }}
-                        className="text-xl md:text-2xl font-light max-w-2xl mx-auto text-[#E8DFD0]/90 leading-relaxed"
+                {/* Floating Glass Card Content */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-full px-6 flex justify-center">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+                        className="bg-white/5 backdrop-blur-md border border-white/10 p-8 md:p-12 max-w-md text-center rounded-sm shadow-2xl"
                     >
-                        Crafting a legacy of elegance, one stitch at a time.
-                    </motion.p>
-                </Container>
+                        <motion.span
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.8, duration: 0.8 }}
+                            className="inline-block py-1 px-3 rounded-full border border-white/20 bg-black/20 text-[10px] font-bold tracking-[0.3em] uppercase text-[#D4A574] mb-6"
+                        >
+                            Est. 2024
+                        </motion.span>
+                        <motion.p
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 1, duration: 0.8 }}
+                            className="text-xl md:text-2xl font-light text-[#E8DFD0] leading-relaxed italic"
+                        >
+                            "Crafting a legacy of elegance, one stitch at a time."
+                        </motion.p>
+                    </motion.div>
+                </div>
 
                 {/* Scroll Indicator */}
                 <motion.div
                     style={{ opacity }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5, duration: 1 }}
-                    className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50"
+                    transition={{ delay: 2, duration: 1 }}
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 z-20"
                 >
-                    <span className="text-[10px] uppercase tracking-[0.2em]">Scroll</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em]">Explore</span>
                     <motion.div
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     >
-                        <ChevronDown className="w-5 h-5" />
+                        <ChevronDown className="w-4 h-4" />
                     </motion.div>
                 </motion.div>
             </section>
