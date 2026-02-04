@@ -22,7 +22,8 @@ export const metadata: Metadata = {
   title: "Doree - It has a reason to buy",
   description: "Doree - Open Doors To A World Of Fashion",
   icons: {
-    icon: "/logo.png",
+    icon: "/favicon.ico?v=2",
+    apple: "/favicon.ico?v=2",
   },
 };
 
