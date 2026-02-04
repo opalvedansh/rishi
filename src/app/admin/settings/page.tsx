@@ -18,7 +18,7 @@ export default function AdminSettingsPage() {
     // Form states
     const [storeSettings, setStoreSettings] = useState({
         storeName: "Doree",
-        storeEmail: "hello@doree.com",
+        storeEmail: "Doreebysvd@gmail.com",
         storePhone: "+91 98765 43210",
         storeAddress: "123 Fashion Street, Mumbai, Maharashtra 400001",
         currency: "INR",

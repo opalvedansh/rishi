@@ -70,7 +70,7 @@ export interface CreateOrderData {
 export const CUSTOMER_CARE = {
     phone: '+91 85108 03096',
     whatsapp: '+91 8510803096',
-    email: 'support@doree.in',
+    email: 'Doreebysvd@gmail.com',
     hours: 'Mon-Sat, 9:00 AM - 8:00 PM IST',
 };
 

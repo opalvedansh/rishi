@@ -39,7 +39,7 @@ export default function ContactPage() {
                                     <div className="space-y-4 text-neutral-500 font-light">
                                         <div className="flex items-center gap-4">
                                             <Mail className="w-6 h-6 shrink-0 text-black" />
-                                            <a href="mailto:hello@doree.com" className="hover:text-black transition-colors">hello@doree.com</a>
+                                            <a href="mailto:Doreebysvd@gmail.com" className="hover:text-black transition-colors">Doreebysvd@gmail.com</a>
                                         </div>
                                         <div className="flex items-center gap-4">
                                             <Phone className="w-6 h-6 shrink-0 text-black" />

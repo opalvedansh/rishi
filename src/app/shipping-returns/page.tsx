@@ -36,7 +36,7 @@ export default function ShippingPage() {
                         <section className="mb-12">
                             <h2 className="font-bold text-xl mb-4">How to Start a Return</h2>
                             <p className="text-neutral-600 leading-relaxed mb-4">
-                                To start a return, you can contact us at support@doree.com. If your return is accepted, we’ll send you a return shipping label, as well as instructions on how and where to send your package. Items sent back to us without first requesting a return will not be accepted.
+                                To start a return, you can contact us at Doreebysvd@gmail.com. If your return is accepted, we’ll send you a return shipping label, as well as instructions on how and where to send your package. Items sent back to us without first requesting a return will not be accepted.
                             </p>
                         </section>
 
