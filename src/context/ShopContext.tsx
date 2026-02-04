@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { Product } from "@/data/products";
 
+import { createClient } from "@/utils/supabase/client";
+
 // Define the shape of a Cart Item (Product + Quantity + Selected Size)
 export interface CartItem extends Product {
     quantity: number;
@@ -28,14 +30,59 @@ export const ShopProvider = ({ children }: { children: ReactNode }) => {
     const [cart, setCart] = useState<CartItem[]>([]);
     const [wishlist, setWishlist] = useState<Product[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const supabase = createClient();
 
-    // Load from LocalStorage on mount
+    // Load from LocalStorage on mount AND Refresh Prices
     useEffect(() => {
         const storedCart = localStorage.getItem("cart");
         const storedWishlist = localStorage.getItem("wishlist");
-        if (storedCart) setCart(JSON.parse(storedCart));
+
+        // Initial load from local storage
+        let initialCart: CartItem[] = [];
+        if (storedCart) {
+            initialCart = JSON.parse(storedCart);
+            setCart(initialCart);
+        }
         if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
         setIsLoaded(true);
+
+        // REFRESH PRICES FROM SERVER
+        if (initialCart.length > 0) {
+            const refreshPrices = async () => {
+                const productIds = initialCart.map(item => item.id);
+
+                const { data: latestProducts, error } = await supabase
+                    .from('products')
+                    .select('id, price, title, images')
+                    .in('id', productIds);
+
+                if (error || !latestProducts) {
+                    console.error("Failed to refresh cart prices:", error);
+                    return;
+                }
+
+                setCart(prevCart => {
+                    return prevCart.map(item => {
+                        const freshData = latestProducts.find(p => p.id === item.id);
+                        if (freshData) {
+                            // Update price, title, and image just in case
+                            // Note: images in DB is an array, item.image is a string (first image)
+                            // We handle the image mapping if needed, but primary goal is PRICE.
+                            return {
+                                ...item,
+                                price: freshData.price,
+                                title: freshData.title,
+                                // Only update image if strictly needed, usually the first one
+                                image: freshData.images?.[0] || item.image
+                            };
+                        }
+                        return item;
+                    });
+                });
+            };
+
+            refreshPrices();
+        }
     }, []);
 
     // Save to LocalStorage whenever cart or wishlist changes
