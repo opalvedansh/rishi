@@ -706,7 +706,7 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
                     {/* Why Choose Us */}
                     <div className="bg-gradient-to-br from-neutral-900 to-neutral-800 rounded-2xl p-6 lg:p-8 text-white">
                         <FadeIn>
-                            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                            <h3 className="text-lg font-bold mb-6 flex items-center gap-2 text-[#C9A86C]">
                                 <Award className="w-5 h-5 text-[#C9A86C]" />
                                 Why Doree?
                             </h3>
