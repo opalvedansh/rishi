@@ -152,8 +152,10 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
         setZoomPosition({ x, y });
     };
 
-    const discount = product.originalPrice
-        ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+    const originalPrice = product.originalPrice || (product as any).original_price;
+
+    const discount = originalPrice
+        ? Math.round(((originalPrice - product.price) / originalPrice) * 100)
         : 0;
 
     return (
@@ -353,15 +355,15 @@ export default function ProductDetailContent({ product, relatedProducts }: Produ
                                 <div className="bg-gradient-to-r from-neutral-50 to-neutral-100/50 rounded-xl p-4 mb-6">
                                     <div className="flex items-baseline gap-3">
                                         <span className="text-3xl font-bold text-neutral-900">₹{product.price.toLocaleString()}</span>
-                                        {product.originalPrice && product.originalPrice > product.price && (
+                                        {originalPrice && originalPrice > product.price && (
                                             <>
                                                 <span className="text-lg text-neutral-400 line-through">
-                                                    ₹{product.originalPrice.toLocaleString()}
+                                                    ₹{originalPrice.toLocaleString()}
                                                 </span>
                                                 <span className="text-sm font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded flex items-center gap-1">
                                                     <span>{discount}% OFF</span>
                                                     <span>•</span>
-                                                    <span>Save ₹{(product.originalPrice - product.price).toLocaleString()}</span>
+                                                    <span>Save ₹{(originalPrice - product.price).toLocaleString()}</span>
                                                 </span>
                                             </>
                                         )}
