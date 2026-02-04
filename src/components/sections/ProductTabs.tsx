@@ -85,9 +85,9 @@ function transformToFrontend(dbProduct: DBProduct): Product {
 const ProductTabs = () => {
     const [activeTab, setActiveTab] = useState<TabKey>("trendingNow");
     const [tabProducts, setTabProducts] = useState<Record<TabKey, Product[]>>({
-        trendingNow: fallbackProducts,
-        newArrivals: fallbackProducts,
-        bestSellers: fallbackProducts,
+        trendingNow: [],
+        newArrivals: [],
+        bestSellers: [],
     });
     const [isLoading, setIsLoading] = useState(true);
 
@@ -176,25 +176,41 @@ const ProductTabs = () => {
                 </div>
 
                 <div className="min-h-[500px]">
-                    <motion.div
-                        key={activeTab}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
-                        className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12 md:gap-8"
-                    >
-                        {currentProducts.map((product, index) => (
-                            <motion.div
-                                key={product.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1, duration: 0.5 }}
-                            >
-                                <ProductCard product={product} />
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                    {isLoading ? (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12 md:gap-8">
+                            {[...Array(4)].map((_, index) => (
+                                <div key={index} className="animate-pulse">
+                                    <div className="aspect-[3/4] bg-neutral-200 rounded-lg mb-4" />
+                                    <div className="h-4 bg-neutral-200 rounded w-3/4 mb-2" />
+                                    <div className="h-4 bg-neutral-200 rounded w-1/2" />
+                                </div>
+                            ))}
+                        </div>
+                    ) : currentProducts.length > 0 ? (
+                        <motion.div
+                            key={activeTab}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.5 }}
+                            className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12 md:gap-8"
+                        >
+                            {currentProducts.map((product, index) => (
+                                <motion.div
+                                    key={product.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                                >
+                                    <ProductCard product={product} />
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    ) : (
+                        <div className="text-center py-16 text-neutral-500">
+                            No products available for this category.
+                        </div>
+                    )}
                 </div>
 
                 <div className="text-center mt-16">
