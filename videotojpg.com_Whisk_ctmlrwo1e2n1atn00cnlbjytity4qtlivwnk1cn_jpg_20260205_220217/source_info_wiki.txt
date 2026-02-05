@@ -1,0 +1,168 @@
+== Source Information ==
+
+These frames were extracted from [[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4]] using [https://videotojpg.com videotojpg.com].
+
+=== Suggested {{Information}} template ===
+
+<nowiki>
+{{Information
+|description=Frame extracted from [[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4]]
+|source={{Extracted from|Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4}}
+|date={{According to Exif data}}
+|author=
+|permission=
+|other versions=
+}}
+</nowiki>
+
+=== Extracted frames ===
+
+* [[File:img_00004.jpg]] - frame at 2s157ms
+* [[File:img_00005.jpg]] - frame at 2s212ms
+* [[File:img_00006.jpg]] - frame at 2s268ms
+* [[File:img_00007.jpg]] - frame at 2s323ms
+* [[File:img_00008.jpg]] - frame at 2s379ms
+* [[File:img_00009.jpg]] - frame at 2s434ms
+* [[File:img_00010.jpg]] - frame at 2s490ms
+* [[File:img_00011.jpg]] - frame at 2s546ms
+* [[File:img_00012.jpg]] - frame at 2s601ms
+* [[File:img_00013.jpg]] - frame at 2s657ms
+* [[File:img_00014.jpg]] - frame at 2s712ms
+* [[File:img_00015.jpg]] - frame at 2s768ms
+* [[File:img_00016.jpg]] - frame at 2s823ms
+* [[File:img_00017.jpg]] - frame at 2s879ms
+* [[File:img_00018.jpg]] - frame at 2s934ms
+* [[File:img_00019.jpg]] - frame at 2s990ms
+* [[File:img_00020.jpg]] - frame at 3s46ms
+* [[File:img_00021.jpg]] - frame at 3s101ms
+* [[File:img_00022.jpg]] - frame at 3s157ms
+* [[File:img_00023.jpg]] - frame at 3s212ms
+* [[File:img_00024.jpg]] - frame at 3s268ms
+* [[File:img_00025.jpg]] - frame at 3s323ms
+* [[File:img_00026.jpg]] - frame at 3s379ms
+* [[File:img_00027.jpg]] - frame at 3s434ms
+* [[File:img_00028.jpg]] - frame at 3s490ms
+* [[File:img_00029.jpg]] - frame at 3s546ms
+* [[File:img_00030.jpg]] - frame at 3s601ms
+* [[File:img_00031.jpg]] - frame at 3s657ms
+* [[File:img_00032.jpg]] - frame at 3s712ms
+* [[File:img_00033.jpg]] - frame at 3s768ms
+* [[File:img_00034.jpg]] - frame at 3s823ms
+* [[File:img_00035.jpg]] - frame at 3s879ms
+* [[File:img_00036.jpg]] - frame at 3s934ms
+* [[File:img_00037.jpg]] - frame at 3s990ms
+* [[File:img_00038.jpg]] - frame at 4s46ms
+* [[File:img_00039.jpg]] - frame at 4s101ms
+* [[File:img_00040.jpg]] - frame at 4s157ms
+* [[File:img_00041.jpg]] - frame at 4s212ms
+* [[File:img_00042.jpg]] - frame at 4s268ms
+* [[File:img_00043.jpg]] - frame at 4s323ms
+* [[File:img_00044.jpg]] - frame at 4s379ms
+* [[File:img_00045.jpg]] - frame at 4s434ms
+* [[File:img_00046.jpg]] - frame at 4s490ms
+* [[File:img_00047.jpg]] - frame at 4s546ms
+* [[File:img_00048.jpg]] - frame at 4s601ms
+* [[File:img_00049.jpg]] - frame at 4s657ms
+* [[File:img_00050.jpg]] - frame at 4s712ms
+* [[File:img_00051.jpg]] - frame at 4s768ms
+* [[File:img_00052.jpg]] - frame at 4s823ms
+* [[File:img_00053.jpg]] - frame at 4s879ms
+* [[File:img_00054.jpg]] - frame at 4s934ms
+* [[File:img_00055.jpg]] - frame at 4s990ms
+* [[File:img_00056.jpg]] - frame at 5s46ms
+* [[File:img_00057.jpg]] - frame at 5s101ms
+* [[File:img_00058.jpg]] - frame at 5s157ms
+* [[File:img_00059.jpg]] - frame at 5s212ms
+* [[File:img_00060.jpg]] - frame at 5s268ms
+* [[File:img_00061.jpg]] - frame at 5s323ms
+* [[File:img_00062.jpg]] - frame at 5s379ms
+* [[File:img_00063.jpg]] - frame at 5s434ms
+* [[File:img_00064.jpg]] - frame at 5s490ms
+* [[File:img_00067.jpg]] - frame at 5s657ms
+* [[File:img_00071.jpg]] - frame at 5s879ms
+* [[File:img_00073.jpg]] - frame at 5s990ms
+* [[File:img_00077.jpg]] - frame at 6s212ms
+* [[File:img_00081.jpg]] - frame at 6s434ms
+* [[File:img_00085.jpg]] - frame at 6s657ms
+* [[File:img_00091.jpg]] - frame at 6s990ms
+* [[File:img_00094.jpg]] - frame at 7s157ms
+* [[File:img_00097.jpg]] - frame at 7s323ms
+* [[File:img_00103.jpg]] - frame at 7s657ms
+* [[File:img_00106.jpg]] - frame at 7s823ms
+* [[File:img_00109.jpg]] - frame at 7s990ms
+
+=== Copy-paste source lines ===
+
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s157ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s212ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s268ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s323ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s379ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s434ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s490ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s546ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s601ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s657ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s712ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s768ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s823ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s879ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s934ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 2s990ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s46ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s101ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s157ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s212ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s268ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s323ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s379ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s434ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s490ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s546ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s601ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s657ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s712ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s768ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s823ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s879ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s934ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 3s990ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s46ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s101ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s157ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s212ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s268ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s323ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s379ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s434ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s490ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s546ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s601ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s657ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s712ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s768ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s823ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s879ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s934ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 4s990ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s46ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s101ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s157ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s212ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s268ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s323ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s379ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s434ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s490ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s657ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s879ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 5s990ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 6s212ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 6s434ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 6s657ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 6s990ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 7s157ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 7s323ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 7s657ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 7s823ms]]
+[[File:Whisk_ctmlrwo1e2n1atn00cnlbjytity4qtlivwnk1cn.mp4|frame at 7s990ms]]
