@@ -93,27 +93,36 @@ const Hero = ({
         const img = images[frameIndex];
         if (!img || !img.complete) return;
 
-        // Calculate aspect ratios for cover fit
+        // Calculate aspect ratios for CONTAIN fit (show full image)
         const canvasRatio = canvas.width / canvas.height;
         const imgRatio = img.width / img.height;
 
         let drawWidth: number, drawHeight: number, offsetX: number, offsetY: number;
 
+        // Use CONTAIN logic - fit entire image within canvas
         if (canvasRatio > imgRatio) {
+            // Canvas is wider than image - fit by height
+            drawHeight = canvas.height;
+            drawWidth = canvas.height * imgRatio;
+            offsetX = (canvas.width - drawWidth) / 2;
+            offsetY = 0;
+        } else {
+            // Canvas is taller than image - fit by width
             drawWidth = canvas.width;
             drawHeight = canvas.width / imgRatio;
             offsetX = 0;
             offsetY = (canvas.height - drawHeight) / 2;
-        } else {
-            drawWidth = canvas.height * imgRatio;
-            drawHeight = canvas.height;
-            offsetX = (canvas.width - drawWidth) / 2;
-            offsetY = 0;
         }
 
         // Use imageSmoothingQuality for better scaling
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = "high";
+
+        // Fill background first (in case image doesn't cover entire canvas)
+        ctx.fillStyle = "#1a1a1a";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     }, []);
