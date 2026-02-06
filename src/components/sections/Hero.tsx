@@ -38,11 +38,10 @@ const Hero = ({
     });
 
     // Apply spring physics for smooth interpolation
-    // High stiffness + damping = responsive stop, no overshoot
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 300,
-        damping: 50,
-        restDelta: 0.0001,
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001,
     });
 
     // Map smooth progress to frame index
