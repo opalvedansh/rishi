@@ -102,7 +102,7 @@ export function useRazorpay() {
 
         const razorpayOptions = {
             key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-            amount: options.amount * 100, // Convert to paise
+            amount: Math.round(options.amount * 100), // Convert to paise (integer)
             currency: options.currency || "INR",
             name: options.name,
             description: options.description || "",
