@@ -43,7 +43,7 @@ export default function ContactPage() {
                                         </div>
                                         <div className="flex items-center gap-4">
                                             <Phone className="w-6 h-6 shrink-0 text-black" />
-                                            <a href="tel:+1234567890" className="hover:text-black transition-colors">+1 (234) 567-890</a>
+                                            <a href="tel:+918510803096" className="hover:text-black transition-colors">+91 85108 03096</a>
                                         </div>
                                     </div>
                                 </div>
