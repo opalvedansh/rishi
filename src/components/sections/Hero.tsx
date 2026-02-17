@@ -34,8 +34,8 @@ const Hero = ({
     const currentFrameRef = useRef(-1);
     const rafRef = useRef<number | null>(null);
 
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [loadProgress, setLoadProgress] = useState(0);
+    // Removed loading state and progress tracking
+
 
     // Direct scroll progress - no springs, no elasticity
     // This creates the Apple-level precision feel
@@ -76,18 +76,14 @@ const Hero = ({
                 img.src = getFramePath(i);
                 img.onload = () => {
                     loadedCount++;
-                    setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-                    if (loadedCount === FRAME_COUNT) {
-                        setIsLoaded(true);
-                    }
+                    // Removed progress update
+                    // Removed isLoaded update
                     resolve();
                 };
                 img.onerror = () => {
                     loadedCount++;
-                    setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-                    if (loadedCount === FRAME_COUNT) {
-                        setIsLoaded(true);
-                    }
+                    // Removed progress update
+                    // Removed isLoaded update
                     resolve();
                 };
                 imgArray[i - 1] = img;
@@ -180,7 +176,8 @@ const Hero = ({
 
     // Animation loop - 60fps smooth rendering
     useEffect(() => {
-        if (!isLoaded) return;
+        // Removed !isLoaded check to allow immediate animation start
+
 
         const animate = () => {
             const frame = frameIndex.get();
@@ -195,7 +192,7 @@ const Hero = ({
                 cancelAnimationFrame(rafRef.current);
             }
         };
-    }, [isLoaded, frameIndex, renderFrame]);
+    }, [frameIndex, renderFrame]);
 
     // Handle canvas resize with DPR support
     useEffect(() => {
@@ -223,35 +220,21 @@ const Hero = ({
             window.removeEventListener("resize", handleResize);
             clearTimeout(resizeTimeout);
         };
-    }, [isLoaded, frameIndex, renderFrame]);
+    }, [frameIndex, renderFrame]);
 
-    // Initial render when loaded
+    // Initial render - try immediately
     useEffect(() => {
-        if (isLoaded && canvasRef.current) {
+        if (canvasRef.current) {
             currentFrameRef.current = -1;
             renderFrame(1);
         }
-    }, [isLoaded, renderFrame]);
+    }, [renderFrame]);
 
     return (
         <section ref={containerRef} className="relative h-[250vh]">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 {/* Loading Overlay - Minimal, Premium */}
-                {!isLoaded && (
-                    <div className="absolute inset-0 z-50 bg-white flex flex-col items-center justify-center">
-                        <div className="w-32 h-[2px] bg-neutral-200 rounded-full overflow-hidden">
-                            <motion.div
-                                className="h-full bg-neutral-900 rounded-full"
-                                initial={{ width: 0 }}
-                                animate={{ width: `${loadProgress}%` }}
-                                transition={{ duration: 0.2, ease: "linear" }}
-                            />
-                        </div>
-                        <p className="mt-6 text-neutral-400 text-[11px] tracking-[0.3em] uppercase font-light">
-                            {loadProgress}%
-                        </p>
-                    </div>
-                )}
+
 
                 {/* Canvas Layer - The dominant visual */}
                 <canvas
