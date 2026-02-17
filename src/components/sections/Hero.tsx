@@ -232,7 +232,7 @@ const Hero = ({
 
     return (
         <section ref={containerRef} className="relative h-[250vh]">
-            <div className="sticky top-0 h-screen w-full overflow-hidden">
+            <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
                 {/* Loading Overlay - Minimal, Premium */}
 
 
