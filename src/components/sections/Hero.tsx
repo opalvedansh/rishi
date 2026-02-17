@@ -231,7 +231,7 @@ const Hero = ({
     }, [renderFrame]);
 
     return (
-        <section ref={containerRef} className="relative h-[250vh]">
+        <section ref={containerRef} className="relative h-[250vh] bg-white">
             <div className="sticky top-0 h-screen w-full overflow-hidden bg-white">
                 {/* Loading Overlay - Minimal, Premium */}
 
@@ -242,7 +242,8 @@ const Hero = ({
                     className="absolute inset-0 w-full h-full"
                     style={{
                         imageRendering: "auto",
-                        willChange: "transform"
+                        willChange: "transform",
+                        backgroundColor: "white"
                     }}
                 />
 
